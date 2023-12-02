@@ -7,6 +7,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-01.svg",
     imageLight: "/images/brand/brand-dark-01.svg",
+    height: "64px",
+    width: "64px",
   },
   {
     id: 0.3,
@@ -14,6 +16,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-02.svg",
     imageLight: "/images/brand/brand-dark-02.svg",
+    height: "64px",
+    width: "64px",
   },
   {
     id: 0.4,
@@ -21,6 +25,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-03.svg",
     imageLight: "/images/brand/brand-dark-03.svg",
+    height: "64px",
+    width: "53px",
   },
   {
     id: 0.5,
@@ -28,6 +34,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-04.svg",
     imageLight: "/images/brand/brand-dark-04.svg",
+    height: "64px",
+    width: "64px",
   },
   {
     id: 0.6,
@@ -35,6 +43,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-05.svg",
     imageLight: "/images/brand/brand-dark-05.svg",
+    height: "82px",
+    width: "82px",
   },
   {
     id: 0.7,
@@ -42,6 +52,8 @@ const brandData: Brand[] = [
     href: "#",
     image: "/images/brand/brand-light-06.svg",
     imageLight: "/images/brand/brand-dark-06.svg",
+    height: "42px",
+    width: "142px",
   },
 ];
 
