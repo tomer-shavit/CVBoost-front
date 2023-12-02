@@ -2,8 +2,8 @@ import SidebarLink from "@/components/Docs/SidebarLink";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Docs Page - Solid SaaS Boilerplate",
-  description: "This is Docs page for Solid Pro",
+  title: "CVBoost | Docs",
+  description: "This is the Docs page for CVBoost.",
   // other metadata
 };
 

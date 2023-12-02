@@ -14,9 +14,9 @@ import Blog from "@/components/Blog";
 import Testimonial from "@/components/Testimonial";
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Template for SaaS Startups - Solid SaaS Boilerplate",
-  description: "This is Home for Solid Pro",
-  // other metadata
+  title: "CVBoost | Boost Your Resume With AI.",
+  description: "Improve Your Resume Using AI - Shortcut to Your Dream Job",
+  keywords: "CVBoost, Resume, AI, Job, Career, Interview, CV, Curriculum Vitae",
 };
 
 export default function Home() {
