@@ -26,7 +26,7 @@ const Hero = () => {
               </h1>
               <p className="text-xl">
                 Optimize Your Resume with AI - Upload now for an expert,
-                AI-driven analysis and tailored feedback so you could get that
+                AI-driven analysis and tailored feedback so you can get that
                 offer faster.
               </p>
 
