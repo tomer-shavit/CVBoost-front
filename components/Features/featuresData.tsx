@@ -4,44 +4,23 @@ const featuresData: Feature[] = [
   {
     id: 1,
     icon: "/images/icon/icon-01.svg",
-    title: "Crafted for SaaS",
+    title: "Action-Oriented Analysis",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
+      "Elevate your resume with AI-driven insights that highlight your key strengths and achievements, making your profile irresistible to employers.",
   },
   {
     id: 2,
     icon: "/images/icon/icon-02.svg",
-    title: "High-quality Design",
+    title: "Optimized for AI Scanners",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
+      "Enhance your resume’s compatibility with AI scanners, boosting your chances of standing out in automated job application systems.",
   },
   {
     id: 3,
     icon: "/images/icon/icon-03.svg",
-    title: "Next.js 13 + TypeScript",
+    title: "Personalized Improvement Tips",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
-  },
-  {
-    id: 4,
-    icon: "/images/icon/icon-04.svg",
-    title: "Sanity Blog and Docs",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
-  },
-  {
-    id: 5,
-    icon: "/images/icon/icon-05.svg",
-    title: "DB, Auth and Stripe",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
-  },
-  {
-    id: 6,
-    icon: "/images/icon/icon-06.svg",
-    title: "Regular Free Updates",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor.",
+      "Receive targeted suggestions for improving your resume, aligning it with industry trends and specific job requirements.",
   },
 ];
 
