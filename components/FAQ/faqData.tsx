@@ -3,8 +3,8 @@ import { FAQ } from "@/types/faq";
 const faqData: FAQ[] = [
   {
     id: 1,
-    quest: "Can't I just ask chatGPT for feedback?",
-    ans: "Yes you can. But CVBoost is built to give the best feedback possible to make you stand out from the rest of the people that use chatGPT.",
+    quest: "Can't I just ask ChatGPT for feedback?",
+    ans: "Certainly, you can. However, CVBoost is specifically engineered to provide superior feedback, ensuring you stand out among others using ChatGPT.",
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ const faqData: FAQ[] = [
   {
     id: 3,
     quest: "How does CVBoost enhance my resume with AI?",
-    ans: "CVBoost gives you detailed feedback on streangths and weaknesses of your resume, and how to improve it.",
+    ans: "CVBoost offers in-depth analysis of your resume's strengths and weaknesses, along with actionable advice for enhancements.",
   },
   {
     id: 4,
@@ -23,9 +23,8 @@ const faqData: FAQ[] = [
   },
   {
     id: 5,
-
     quest: "How fast do I get feedback from CVBoost?",
-    ans: "Feedback is swift, usually withing seconds!",
+    ans: "Feedback is rapid, typically provided within seconds!",
   },
 ];
 
