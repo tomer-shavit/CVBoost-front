@@ -32,15 +32,11 @@ const Hero = () => {
                 <form onSubmit={handleSubmit}>
                   <button
                     aria-label="get started button"
-                    className="flex w-52 justify-center rounded-full bg-black px-7.5 py-2.5 text-center text-xl font-semibold text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
+                    className="flex w-52 justify-center rounded-full bg-primary px-7.5 py-2.5 text-center text-xl font-semibold text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
                   >
                     Try for free
                   </button>
                 </form>
-
-                <p className="mt-5 text-gray-400 dark:text-white">
-                  PDF format, English Only.
-                </p>
               </div>
             </div>
 
