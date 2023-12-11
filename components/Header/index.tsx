@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
@@ -11,6 +12,7 @@ const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdownToggler, setDropdownToggler] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
+  // const { data: session, status } = useSession();
 
   const pathUrl = usePathname();
 
@@ -159,13 +161,18 @@ const Header = () => {
 
           <div className="mt-7 flex items-center gap-6 xl:mt-0">
             <ThemeToggler />
-
+            {/* {session ? (
+              <p className="text-black dark:text-white">
+                Hi {session.user?.name}
+              </p>
+            ) : ( */}
             <Link
-              href="/"
+              href="/auth/signin"
               className="text-regular font-medium text-waterloo hover:text-primary"
             >
               Login
             </Link>
+            {/* )} */}
 
             <Link
               href="/"
