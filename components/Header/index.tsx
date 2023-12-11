@@ -52,7 +52,12 @@ const Header = () => {
               height={30}
               className="w-full dark:hidden"
             /> */}
-            <h1 className="text-2xl font-semibold text-black">CVBoost</h1>
+            <h1 className="text-2xl font-semibold text-black dark:hidden ">
+              CVBoost
+            </h1>
+            <h1 className="hidden text-2xl font-semibold text-white dark:block">
+              CVBoost
+            </h1>
           </a>
 
           {/* <!-- Hamburger Toggle BTN --> */}
