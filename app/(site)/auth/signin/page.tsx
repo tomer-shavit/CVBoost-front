@@ -1,14 +1,12 @@
+"use client";
 import Signin from "@/components/Auth/Signin";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Login Page - CVBoost Login",
-  description: "This is Login page for CVBoost",
-};
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const SigninPage = () => {
   return (
     <>
+      <Header />
       <Signin />
     </>
   );

@@ -13,6 +13,18 @@ const menuData: Menu[] = [
     newTab: false,
     path: "/#features",
   },
+  {
+    id: 3,
+    title: "Reviews",
+    newTab: false,
+    path: "/#reviews",
+  },
+  {
+    id: 4,
+    title: "FAQ",
+    newTab: false,
+    path: "/#FAQ",
+  },
   // {
   //   id: 2.1,
   //   title: "Blog",
@@ -69,12 +81,12 @@ const menuData: Menu[] = [
   //   ],
   // },
 
-  {
-    id: 4,
-    title: "Support",
-    newTab: false,
-    path: "/support",
-  },
+  // {
+  //   id: 4,
+  //   title: "Support",
+  //   newTab: false,
+  //   path: "/support",
+  // },
 ];
 
 export default menuData;

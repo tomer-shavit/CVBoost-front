@@ -25,7 +25,7 @@ const Testimonial = () => {
   };
   return (
     <>
-      <section>
+      <section id="reviews">
         <div className="mx-auto mt-10 max-w-c-1315 px-4 md:px-8 xl:px-0">
           {/* <!-- Section Title Start --> */}
           <div className="animate_top mx-auto text-center">

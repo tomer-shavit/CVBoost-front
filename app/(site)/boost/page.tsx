@@ -1,18 +1,20 @@
+"use client";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import ApiLoader from "@/components/Loader";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "CVBoost | Boost",
-  description: "This is boost for CVBoost",
-};
+import { UploadSection } from "@/components/Upload";
+import { useSession } from "next-auth/react";
 
 const BoostPage = () => {
+  const { data: session, status } = useSession({
+    required: true,
+  });
   return (
-    <div className="h-[90vh] w-full">
-      <div className="flex items-center justify-center">
-        <ApiLoader></ApiLoader>
-      </div>
-    </div>
+    <>
+      <Header />
+      <UploadSection />
+      {/* <ApiLoader></ApiLoader> */}
+    </>
   );
 };
 
