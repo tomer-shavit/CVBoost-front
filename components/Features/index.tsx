@@ -7,10 +7,8 @@ import SectionHeader from "../Common/SectionHeader";
 const Feature = () => {
   return (
     <>
-      {/* <!-- ===== Features Start ===== --> */}
       <section id="features" className="py-14 lg:py-16 xl:py-18">
         <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
-          {/* <!-- Section Title Start --> */}
           <SectionHeader
             headerInfo={{
               title: "CVBoost Features",
@@ -19,20 +17,13 @@ const Feature = () => {
              ensuring your CV stands out.`,
             }}
           />
-          {/* <!-- Section Title End --> */}
-
           <div className="mt-12 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-10 lg:grid-cols-3 xl:mt-16 xl:gap-12.5">
-            {/* <!-- Features item Start --> */}
-
             {featuresData.map((feature, key) => (
               <SingleFeature feature={feature} key={key} />
             ))}
-            {/* <!-- Features item End --> */}
           </div>
         </div>
       </section>
-
-      {/* <!-- ===== Features End ===== --> */}
     </>
   );
 };

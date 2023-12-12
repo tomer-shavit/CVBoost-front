@@ -1,12 +1,6 @@
-"use client";
 import Image from "next/image";
-import { useState } from "react";
 
 const Hero = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <>
       <section className="overflow-hidden pb-10 pt-35 md:pt-40 xl:pb-12 xl:pt-46">
@@ -29,14 +23,12 @@ const Hero = () => {
               </p>
 
               <div className="mt-6">
-                <form onSubmit={handleSubmit}>
-                  <button
-                    aria-label="get started button"
-                    className="flex w-52 justify-center rounded-full bg-primary px-7.5 py-2.5 text-center text-xl font-semibold text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
-                  >
-                    Try for free
-                  </button>
-                </form>
+                <button
+                  aria-label="get started button"
+                  className="flex w-52 justify-center rounded-full bg-primary px-7.5 py-2.5 text-center text-xl font-semibold text-white duration-300 ease-in-out hover:bg-blackho dark:bg-primary dark:hover:bg-blackho"
+                >
+                  Try for free
+                </button>
               </div>
             </div>
 
