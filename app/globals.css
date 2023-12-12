@@ -20,7 +20,7 @@
 
 @layer base {
   body {
-    @apply relative z-1 font-inter text-regular font-normal text-waterloo dark:text-manatee;
+    @apply relative z-1 font-inter text-regular font-normal text-waterloo dark:text-neutral-300;
   }
 }
 

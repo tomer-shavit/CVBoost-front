@@ -16,7 +16,7 @@ export const UploadSection = () => {
 
   return (
     <section className="mb-55 mt-10 w-full overflow-hidden pb-10 pt-35 md:pt-40 xl:pb-12 xl:pt-46">
-      <DropzoneWrapper className="min-h-[380px]" setFile={setFile}>
+      <DropzoneWrapper className="" setFile={setFile}>
         <div className="mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
           <SectionHeader
             headerInfo={{
