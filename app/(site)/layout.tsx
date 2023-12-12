@@ -1,36 +1,29 @@
-"use client";
-
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import Lines from "@/components/Lines";
-import ScrollToTop from "@/components/ScrollToTop";
-import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import ToasterContext from "../context/ToastContext";
+import ThemeProviderComponent from "@/providers/ThemeProvider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import SessionProviderComponent from "@/providers/SessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
-import ToasterContext from "../context/ToastContext";
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`dark:bg-black ${inter.className}`}>
-        <ThemeProvider
-          enableSystem={false}
-          attribute="class"
-          defaultTheme="light"
-        >
-          <Lines />
-          <Header />
-          <ToasterContext />
-          {children}
-          <Footer />
-          <ScrollToTop />
-        </ThemeProvider>
+        <ThemeProviderComponent>
+          <SessionProviderComponent session={session}>
+            <Lines />
+            <ToasterContext />
+            {children}
+          </SessionProviderComponent>
+        </ThemeProviderComponent>
       </body>
     </html>
   );
