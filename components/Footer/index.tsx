@@ -8,7 +8,7 @@ const Footer = () => {
       <footer className="border-t border-stroke bg-white dark:border-strokedark dark:bg-blacksection">
         <div className="mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
           {/* <!-- Footer Top --> */}
-          <div className="py-20 lg:py-25">
+          <div className="py-10 lg:py-12">
             <div className="flex flex-wrap gap-8 lg:justify-between lg:gap-0">
               <motion.div
                 variants={{
@@ -29,24 +29,27 @@ const Footer = () => {
                 className="animate_top w-1/2 lg:w-1/4"
               >
                 {/* logo */}
-                {/* <a href="index.html" className="relative">
-                  <Image
-                    width={110}
-                    height={80}
-                    src="/images/logo/logo-light.svg"
-                    alt="Logo"
-                    className="dark:hidden"
-                  />
-                  <Image
-                    width={110}
-                    height={80}
-                    src="/images/logo/logo-dark.svg"
-                    alt="Logo"
-                    className="hidden dark:block"
-                  />
-                </a> */}
 
-                <p className="mb-10 mt-5">
+                <a
+                  href="/"
+                  className="flex flex-row items-center justify-center"
+                >
+                  <Image
+                    src="/images/logo/logo-light.svg"
+                    alt="logo"
+                    width={40}
+                    height={11}
+                    className="mr-3 w-[40px] xl:w-[50px]"
+                  />
+                  <h1 className="text-2xl font-semibold text-black dark:hidden ">
+                    CVBoost
+                  </h1>
+                  <h1 className="hidden text-2xl font-semibold text-white dark:block">
+                    CVBoost
+                  </h1>
+                </a>
+
+                <p className="mb-10 mt-5 text-center">
                   Maximize Your Career Opportunities - Try CVBoost Today for a
                   Smarter, AI-Enhanced Resume Review
                 </p>

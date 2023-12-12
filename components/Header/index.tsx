@@ -39,21 +39,14 @@ const Header = () => {
     >
       <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
         <div className="flex w-full items-center justify-between xl:w-1/4">
-          <a href="/">
-            {/* <Image
-              src="/images/logo/logo-dark.svg"
-              alt="logo"
-              width={119.03}
-              height={30}
-              className="hidden w-full dark:block"
-            />
+          <a href="/" className="flex flex-row items-center justify-center">
             <Image
               src="/images/logo/logo-light.svg"
               alt="logo"
-              width={119.03}
-              height={30}
-              className="w-full dark:hidden"
-            /> */}
+              width={40}
+              height={11}
+              className="mr-3 w-[40px] xl:w-[50px]"
+            />
             <h1 className="text-2xl font-semibold text-black dark:hidden ">
               CVBoost
             </h1>
