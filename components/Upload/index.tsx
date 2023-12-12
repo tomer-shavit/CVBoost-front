@@ -2,11 +2,11 @@
 import { motion as m } from "framer-motion";
 import Input from "./Input";
 import DropzoneWrapper from "./DropzoneWrapper";
-import { useState } from "react";
 import SectionHeader from "../Common/SectionHeader";
 
-export const UploadSection = () => {
-  const [file, setFile] = useState<File | undefined>();
+export const UploadSection: React.FC<{
+  setFile: (file: File) => void;
+}> = ({ setFile }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = event.target.files?.[0];
     if (uploadedFile) {
