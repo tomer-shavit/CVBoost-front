@@ -1,24 +1,29 @@
 "use client";
-import { useEffect } from "react";
+import Analysis from "@/components/Analysis";
+import Header from "@/components/Header";
+import { GptApiResponse } from "@/types/apiCalls";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const BoostIdPage = () => {
+  const router = useRouter();
+  const [data, setData] = useState<GptApiResponse>();
+
   useEffect(() => {
-    // Retrieve the data from session storage and log it
     const storedData = sessionStorage.getItem("boostData");
-    if (storedData) {
-      const boostData = JSON.parse(storedData);
-      console.log("Data from session storage:", boostData);
+    if (!storedData) {
+      router.push("/boost");
     } else {
-      console.log("No data found in session storage.");
+      setData(JSON.parse(storedData));
     }
-    sessionStorage.removeItem("boostData");
+    // sessionStorage.removeItem("boostData");
   }, []);
 
   return (
-    <div>
-      <h1>Analysis page</h1>
-      {/* Render your content using boostId or boostData */}
-    </div>
+    <>
+      <Header />
+      {data ? <Analysis data={data}></Analysis> : null}
+    </>
   );
 };
 

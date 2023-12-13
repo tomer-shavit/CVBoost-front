@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "prisma": "^5.7.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "tailwind-scrollbar": "^3.0.5"
   }
 }

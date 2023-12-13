@@ -16,7 +16,9 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`dark:bg-black ${inter.className}`}>
+      <body
+        className={`dark:bg-black ${inter.className} scrollbar-thin scrollbar-track-slate-200 dark:scrollbar-track-slate-700 scroll scrollbar-thumb-rounded scrollbar-thumb-slate-400 dark:scrollbar-thumb-slate-800 overscroll-none dark:selection:bg-green-600`}
+      >
         <ThemeProviderComponent>
           <SessionProviderComponent session={session}>
             <Lines />
