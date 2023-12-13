@@ -20,7 +20,7 @@ const FeedbackCard: React.FC<{ data: GptApiResponse }> = ({ data }) => {
   }, [data]);
   return (
     <Card>
-      <h5 className="mb-8 flex items-center text-3xl font-extrabold leading-tight text-neutral-100">
+      <h5 className="mb-8 flex items-center text-3xl font-extrabold leading-tight text-blackho dark:text-white">
         <span className="mr-2 inline-block ">
           <HiOutlineLightningBolt />
         </span>
@@ -29,7 +29,7 @@ const FeedbackCard: React.FC<{ data: GptApiResponse }> = ({ data }) => {
       <SubCard>
         <AnalysisSubTitle title="Clarity"></AnalysisSubTitle>
         <AnalysisParagraph text={data.clarity.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-gray-500">
+        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
           <div
             className="h-full rounded-full bg-blue-400/80 text-center text-xs text-white"
             style={{ width: data.clarity.score + "%" }}
@@ -40,7 +40,7 @@ const FeedbackCard: React.FC<{ data: GptApiResponse }> = ({ data }) => {
       <SubCard>
         <AnalysisSubTitle title="Relevance"></AnalysisSubTitle>
         <AnalysisParagraph text={data.relevance.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-gray-500">
+        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
           <div
             className="h-full rounded-full bg-green-400/80 text-center text-xs text-white"
             style={{ width: data.relevance.score + "%" }}
@@ -52,7 +52,7 @@ const FeedbackCard: React.FC<{ data: GptApiResponse }> = ({ data }) => {
         <AnalysisParagraph
           text={data.achievements.feedback}
         ></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-gray-500">
+        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
           <div
             className="h-full rounded-full bg-yellow-400/80 text-center text-xs text-white"
             style={{ width: data.achievements.score + "%" }}
@@ -62,7 +62,7 @@ const FeedbackCard: React.FC<{ data: GptApiResponse }> = ({ data }) => {
       <SubCard last>
         <AnalysisSubTitle title="Keywords"></AnalysisSubTitle>
         <AnalysisParagraph text={data.keywords.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-gray-500">
+        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
           <div
             className="h-full rounded-full bg-fuchsia-400/80 text-center text-xs text-white"
             style={{ width: data.keywords.score + "%" }}

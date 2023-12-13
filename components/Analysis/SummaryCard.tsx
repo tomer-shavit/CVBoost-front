@@ -20,10 +20,10 @@ const SummaryView: React.FC<{ data: GptApiResponse }> = ({ data }) => {
   return (
     <Card>
       <div className="flex flex-col lg:flex-row">
-        <h5 className="text-3xl font-extrabold leading-tight text-neutral-100 lg:pr-2">
+        <h5 className="text-3xl font-extrabold leading-tight text-blackho dark:text-white lg:pr-2">
           Total Score:
         </h5>
-        <h5 className="mb-4 text-3xl font-extrabold leading-tight text-neutral-100">
+        <h5 className="mb-4 text-3xl font-extrabold leading-tight  text-blackho dark:text-white">
           <span className="text-green-400">{score}</span> / 100
         </h5>
       </div>

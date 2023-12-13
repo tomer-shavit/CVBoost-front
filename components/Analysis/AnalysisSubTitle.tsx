@@ -31,7 +31,7 @@ const iconMap: IconMapType = {
 
 const AnalysisSubTitle: React.FC<{ title: string }> = ({ title }) => {
   return (
-    <h4 className="mb-2 flex items-center justify-center text-2xl font-bold text-neutral-100 md:justify-start">
+    <h4 className="mb-2 flex items-center justify-center text-2xl font-bold text-blackho dark:text-white md:justify-start">
       {title}
       <span className="ml-2 mt-2">{iconMap[title]}</span>
     </h4>
