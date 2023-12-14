@@ -40,7 +40,6 @@ model ResumeBoost {
   boostVersion   Int       // Enum BoostVerstion saved in resume function
   resumeHash     Bytes     // Using SHA 256
   resumeText     String?   @db.Text // Optional: storing the encrypted resume text
-  salt           Bytes?    // Salt used for encryption 
   
   user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   feedbacks      Feedback[]

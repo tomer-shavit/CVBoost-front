@@ -1,5 +1,5 @@
 import { GptApiResponse } from "../../types/apiCalls";
-import { useEffect, useState } from "react";
+import { useEffect, useOptimistic, useState } from "react";
 import AnalysisParagraph from "./AnalysisParagraph";
 import Card from "./Card";
 import SubCard from "./SubCard";
@@ -28,7 +28,7 @@ const SummaryView: React.FC<{ data: GptApiResponse }> = ({ data }) => {
         </h5>
       </div>
       <SubCard last>
-        <AnalysisParagraph text={data.summary}></AnalysisParagraph>
+        <AnalysisParagraph text={data.summary.feedback}></AnalysisParagraph>
       </SubCard>
     </Card>
   );

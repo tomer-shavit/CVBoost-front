@@ -1,9 +1,11 @@
 type EditedLine = {
+  feedbackId: number;
   old_line: string;
   new_line: string;
 };
 
-type Feedback = {
+export type Feedback = {
+  feedbackId: number;
   feedback: string;
   score: number;
 };
@@ -15,15 +17,15 @@ export type GptApiResponse = {
   relevance: Feedback;
   achievements: Feedback;
   keywords: Feedback;
-  summary: string;
+  summary: Feedback;
 };
 
 export const emptyGptApiResponse: GptApiResponse = {
   boost_id: "",
   edited_lines: [],
-  clarity: { feedback: "", score: 0 },
-  relevance: { feedback: "", score: 0 },
-  achievements: { feedback: "", score: 0 },
-  keywords: { feedback: "", score: 0 },
-  summary: "",
+  clarity: { feedbackId: 0, feedback: "", score: 0 },
+  relevance: { feedbackId: 0, feedback: "", score: 0 },
+  achievements: { feedbackId: 0, feedback: "", score: 0 },
+  keywords: { feedbackId: 0, feedback: "", score: 0 },
+  summary: { feedbackId: 0, feedback: "", score: 0 },
 };
