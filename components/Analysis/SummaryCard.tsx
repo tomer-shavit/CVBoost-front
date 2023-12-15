@@ -1,11 +1,12 @@
-import { GptApiResponse } from "../../types/apiCalls";
+"use client";
+import { BoostResponse } from "../../types/apiCalls";
 import { useEffect, useOptimistic, useState } from "react";
 import AnalysisParagraph from "./AnalysisParagraph";
 import Card from "./Card";
 import SubCard from "./SubCard";
 import { FEEDBACKS_AMOUNT } from "../../constants/analysis";
 
-const SummaryView: React.FC<{ data: GptApiResponse }> = ({ data }) => {
+const SummaryView: React.FC<{ data: BoostResponse }> = ({ data }) => {
   const [score, setScore] = useState<number>();
 
   useEffect(() => {

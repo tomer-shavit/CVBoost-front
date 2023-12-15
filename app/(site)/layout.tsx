@@ -18,7 +18,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`dark:bg-black ${inter.className} scrollbar-thin scrollbar-track-slate-100 dark:scrollbar-track-slate-700 scroll scrollbar-thumb-rounded scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-800 overscroll-none dark:selection:bg-green-600`}
+        className={`dark:bg-black ${inter.className} scroll overscroll-none scrollbar-thin scrollbar-track-slate-100 scrollbar-thumb-slate-300 scrollbar-thumb-rounded dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-800 dark:selection:bg-green-600`}
       >
         <ThemeProviderComponent>
           <SessionProviderComponent session={session}>

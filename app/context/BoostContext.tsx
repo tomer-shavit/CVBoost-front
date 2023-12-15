@@ -1,20 +1,15 @@
 "use client";
-import { GptApiResponse, emptyGptApiResponse } from "@/types/apiCalls";
+import { BoostResponse, emptyBoostResponse } from "@/types/apiCalls";
 import { BoostDataContextType } from "@/types/boostDataContext";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 const BoostDataContext = createContext<BoostDataContextType>({
-  boostData: emptyGptApiResponse,
+  boostData: emptyBoostResponse,
   setBoostData: () => {},
 });
 
 export const BoostDataProvider = ({ children }) => {
-  const [boostData, setBoostData] =
-    useState<GptApiResponse>(emptyGptApiResponse);
-
-  useEffect(() => {
-    console.log("boostData", boostData);
-  }, [boostData]);
+  const [boostData, setBoostData] = useState<BoostResponse>(emptyBoostResponse);
 
   return (
     <BoostDataContext.Provider value={{ boostData, setBoostData }}>

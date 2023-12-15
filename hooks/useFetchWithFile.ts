@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { GptApiResponse } from "../types/apiCalls";
+import { BoostResponse } from "../types/apiCalls";
 
 type ApiError = {
   message: string;
 };
 
 type UseApiResult = {
-  data: GptApiResponse | null;
+  data: BoostResponse | null;
   isLoading: boolean;
   error: ApiError | null;
 };
@@ -20,7 +20,7 @@ type UseApiHook = (
 ) => UseApiResult;
 
 const useApi: UseApiHook = (url, file, fileName, userId) => {
-  const [data, setData] = useState<GptApiResponse | null>(null);
+  const [data, setData] = useState<BoostResponse | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<ApiError | null>(null);
 

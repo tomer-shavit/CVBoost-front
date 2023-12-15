@@ -1,10 +1,11 @@
+"use client";
 import FeedbackCard from "./FeedbackCard";
 import { motion as m } from "framer-motion";
-import { GptApiResponse } from "../../types/apiCalls";
+import { BoostResponse } from "../../types/apiCalls";
 import SummaryView from "./SummaryCard";
 import SuggestionsCard from "./SuggestionsCard";
 
-const Analysis: React.FC<{ data: GptApiResponse }> = ({ data }) => {
+const Analysis: React.FC<{ data: BoostResponse }> = ({ data }) => {
   return (
     <div className="mt-24 grid grid-cols-1 gap-y-10 pl-8 pr-8 pt-4 md:h-[91vh] md:grid-cols-2 md:grid-rows-6 md:gap-x-12 md:gap-y-8">
       <m.div

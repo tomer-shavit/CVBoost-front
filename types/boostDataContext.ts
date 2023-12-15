@@ -1,6 +1,6 @@
-import { GptApiResponse } from "./apiCalls";
+import { BoostResponse } from "./apiCalls";
 
 export interface BoostDataContextType {
-  boostData: GptApiResponse;
-  setBoostData: (data: GptApiResponse) => void;
+  boostData: BoostResponse;
+  setBoostData: (data: BoostResponse) => void;
 }
