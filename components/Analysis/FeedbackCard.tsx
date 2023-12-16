@@ -6,20 +6,9 @@ import AnalysisParagraph from "./AnalysisParagraph";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import SubCard from "./SubCard";
 import Card from "./Card";
-import { FEEDBACKS_AMOUNT } from "../../constants/analysis";
 import { Like } from "./Like";
 
 const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
-  const [score, setScore] = useState<number>();
-  useEffect(() => {
-    const totalScore =
-      (data.clarity.score +
-        data.relevance.score +
-        data.achievements.score +
-        data.keywords.score) /
-      FEEDBACKS_AMOUNT;
-    setScore(totalScore);
-  }, [data]);
   return (
     <Card>
       <h5 className="mb-8 flex items-center text-3xl font-extrabold leading-tight text-blackho dark:text-white">

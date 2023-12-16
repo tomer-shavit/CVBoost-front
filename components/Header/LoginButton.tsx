@@ -1,5 +1,5 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link"; // or the appropriate import based on your project
 
 const LoginButton = () => {
@@ -7,12 +7,11 @@ const LoginButton = () => {
   return (
     <div>
       {session ? (
-        <p
-          className="cursor-pointer text-regular font-medium text-waterloo hover:text-primary"
-          onClick={() => signOut()}
-        >
-          Hi {session?.user?.name}
-        </p>
+        <Link href="/user">
+          <p className="cursor-pointer text-regular font-medium text-waterloo hover:text-primary">
+            Hi {session?.user?.name}
+          </p>
+        </Link>
       ) : (
         <div className="flex flex-row items-center justify-between">
           <Link

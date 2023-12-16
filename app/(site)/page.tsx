@@ -26,7 +26,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 export default function Home() {
   return (
     <main>
-      <Header />
       <Hero />
       <Brands />
       <Feature />

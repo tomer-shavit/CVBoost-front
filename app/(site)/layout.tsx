@@ -6,7 +6,7 @@ import ThemeProviderComponent from "@/providers/ThemeProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import SessionProviderComponent from "@/providers/SessionProvider";
-import { BoostDataProvider } from "../context/BoostContext";
+import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export default async function RootLayout({
@@ -22,9 +22,10 @@ export default async function RootLayout({
       >
         <ThemeProviderComponent>
           <SessionProviderComponent session={session}>
+            <Header />
             <Lines />
             <ToasterContext />
-            <BoostDataProvider>{children}</BoostDataProvider>
+            {children}
           </SessionProviderComponent>
         </ThemeProviderComponent>
       </body>

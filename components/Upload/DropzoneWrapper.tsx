@@ -11,7 +11,6 @@ const DropzoneWrapper: React.FC<{
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       setFile(acceptedFiles[0]);
-      console.log(acceptedFiles[0]);
     },
     [setFile],
   );

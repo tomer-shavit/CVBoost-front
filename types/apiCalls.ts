@@ -24,12 +24,34 @@ export type Feedback = {
 
 export type BoostResponse = {
   boost_id: string;
+  created_at: Date;
   edited_lines: EditedLine[];
   clarity: Feedback;
   relevance: Feedback;
   achievements: Feedback;
   keywords: Feedback;
   summary: Feedback;
+};
+
+export type WrappedUserPreview = {
+  userPreview?: UserPreview;
+  error?: string;
+};
+
+export type UserPreview = {
+  id: string;
+  name: string | null;
+  resumeBoostsAvailable: number;
+  resumeBoostsTotal: number;
+  resumeBoosts: BoostResponse[];
+};
+
+export const emptyUserPreview: UserPreview = {
+  id: "",
+  name: "",
+  resumeBoostsAvailable: 0,
+  resumeBoostsTotal: 0,
+  resumeBoosts: [],
 };
 
 export type WrappedBoost = {
@@ -40,6 +62,7 @@ export type WrappedBoost = {
 export const emptyBoostResponse: BoostResponse = {
   boost_id: "",
   edited_lines: [],
+  created_at: new Date(),
   clarity: {
     feedbackId: 0,
     isLiked: false,

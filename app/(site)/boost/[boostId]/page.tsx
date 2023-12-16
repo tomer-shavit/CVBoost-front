@@ -1,7 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { useBoostData } from "@/app/context/BoostContext";
 import Analysis from "@/components/Analysis";
-import Header from "@/components/Header";
 import { fetchBoost } from "@/helper/fetchBoosts";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -26,10 +24,7 @@ const BoostIdPage = async ({ params }) => {
   }
 
   return (
-    <>
-      <Header />
-      {wrappedBoost.boost && <Analysis data={wrappedBoost.boost}></Analysis>}
-    </>
+    <>{wrappedBoost.boost && <Analysis data={wrappedBoost.boost}></Analysis>}</>
   );
 };
 

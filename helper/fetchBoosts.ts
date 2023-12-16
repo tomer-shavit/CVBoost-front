@@ -10,7 +10,7 @@ import { Feedback, Session } from "@prisma/client";
 import prisma from "../prisma/client";
 import { decryptText } from "./decrypt";
 
-const dbEditedLineToApiEditedLine = (
+export const dbEditedLineToApiEditedLine = (
   dbEditedLine: Feedback,
   key: string,
 ): EditedLine => {
@@ -26,7 +26,7 @@ const dbEditedLineToApiEditedLine = (
   };
 };
 
-const dbFeedbackToApiFeedback = (
+export const dbFeedbackToApiFeedback = (
   dbFeedback: Feedback,
   key: string,
 ): ApiFeedback => {
@@ -41,17 +41,19 @@ const dbFeedbackToApiFeedback = (
   };
 };
 
-const isEditedLines = (feedbackType: number): boolean =>
+export const isEditedLines = (feedbackType: number): boolean =>
   feedbackType === FeedbackType.REPHRASE;
 
-const buildApiBoost = (
+export const buildApiBoost = (
   boostId: number,
+  createdAt: Date,
   feedbacks: ApiFeedback[],
   editedLines: EditedLine[],
 ): BoostResponse => {
   const boost = emptyBoostResponse;
   boost.boost_id = boostId.toString();
   boost.edited_lines = editedLines;
+  boost.created_at = createdAt;
   feedbacks.forEach((feedback) => {
     switch (feedback.feedbackType) {
       case FeedbackType.CLARITY:
@@ -107,7 +109,12 @@ export const fetchBoost = async (
       }
     });
     return {
-      boost: buildApiBoost(boost.boostId, feedbacks, editedLines),
+      boost: buildApiBoost(
+        boost.boostId,
+        boost.createdAt,
+        feedbacks,
+        editedLines,
+      ),
     };
   } catch (error) {
     return { error: error.message };

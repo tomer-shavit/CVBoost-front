@@ -21,7 +21,7 @@ export const UploadSection: React.FC<{
           <SectionHeader
             headerInfo={{
               title: "",
-              subtitle: "You are Almost There!",
+              subtitle: "Boost Your Resume",
               description:
                 "Simply upload your resume by clicking the button below and we will take care of the rest.",
             }}

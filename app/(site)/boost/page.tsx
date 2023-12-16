@@ -6,11 +6,9 @@ import useFetchWithFile from "@/hooks/useFetchWithFile";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useBoostData } from "@/app/context/BoostContext";
 
 const BoostPage = () => {
-  const { data: session, status } = useSession({ required: true });
-  const { setBoostData } = useBoostData();
+  const { data: session } = useSession({ required: true });
   const [file, setFile] = useState<File | undefined>();
   const { data, isLoading, error } = useFetchWithFile(
     process.env.NEXT_PUBLIC_BOOST_FUNC_API as string,
@@ -24,14 +22,12 @@ const BoostPage = () => {
     if (error) {
       router.push("/error");
     } else if (data) {
-      setBoostData(data);
       router.push(`/boost/${data.boost_id}`); // Assuming data has a boost_id field
     }
   }, [data, error, router]);
 
   return (
     <>
-      <Header />
       {file ? (
         isLoading ? (
           <ApiLoader />
