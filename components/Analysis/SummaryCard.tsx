@@ -1,13 +1,16 @@
 "use client";
 import { BoostResponse } from "../../types/apiCalls";
-import { useEffect, useOptimistic, useState } from "react";
+import { useEffect, useState } from "react";
 import AnalysisParagraph from "./AnalysisParagraph";
 import Card from "./Card";
 import SubCard from "./SubCard";
 import { FEEDBACKS_AMOUNT } from "../../constants/analysis";
+import { useParams } from "next/navigation";
+import { Like } from "./Like";
 
 const SummaryView: React.FC<{ data: BoostResponse }> = ({ data }) => {
   const [score, setScore] = useState<number>();
+  const params = useParams();
 
   useEffect(() => {
     const totalScore =
@@ -18,6 +21,7 @@ const SummaryView: React.FC<{ data: BoostResponse }> = ({ data }) => {
       FEEDBACKS_AMOUNT;
     setScore(totalScore);
   }, [data]);
+
   return (
     <Card>
       <div className="flex flex-col lg:flex-row">
@@ -28,7 +32,13 @@ const SummaryView: React.FC<{ data: BoostResponse }> = ({ data }) => {
           <span className="text-green-400">{score}</span> / 100
         </h5>
       </div>
-      <SubCard last>
+      <SubCard last className="relative">
+        <Like
+          boostId={data.boost_id}
+          isLiked={data.summary.isLiked}
+          feedbackId={data.summary.feedbackId}
+          className="absolute bottom-4 right-4"
+        />
         <AnalysisParagraph text={data.summary.feedback}></AnalysisParagraph>
       </SubCard>
     </Card>

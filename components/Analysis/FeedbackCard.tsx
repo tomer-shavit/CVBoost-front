@@ -7,6 +7,7 @@ import { HiOutlineLightningBolt } from "react-icons/hi";
 import SubCard from "./SubCard";
 import Card from "./Card";
 import { FEEDBACKS_AMOUNT } from "../../constants/analysis";
+import { Like } from "./Like";
 
 const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
   const [score, setScore] = useState<number>();
@@ -30,22 +31,38 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
       <SubCard>
         <AnalysisSubTitle title="Clarity"></AnalysisSubTitle>
         <AnalysisParagraph text={data.clarity.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
-          <div
-            className="h-full rounded-full bg-blue-400/80 text-center text-xs text-white"
-            style={{ width: data.clarity.score + "%" }}
-          ></div>
+        <div className="flex w-full flex-row items-center justify-center">
+          <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
+            <div
+              className="h-full rounded-full bg-blue-400/80 text-center text-xs text-white"
+              style={{ width: data.clarity.score + "%" }}
+            ></div>
+          </div>
+          <Like
+            className="pb-2 pl-3"
+            boostId={data.boost_id}
+            feedbackId={data.clarity.feedbackId}
+            isLiked={data.clarity.isLiked}
+          />
         </div>
       </SubCard>
 
       <SubCard>
         <AnalysisSubTitle title="Relevance"></AnalysisSubTitle>
         <AnalysisParagraph text={data.relevance.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
-          <div
-            className="h-full rounded-full bg-green-400/80 text-center text-xs text-white"
-            style={{ width: data.relevance.score + "%" }}
-          ></div>
+        <div className="flex w-full flex-row items-center justify-center">
+          <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
+            <div
+              className="h-full rounded-full bg-green-400/80 text-center text-xs text-white"
+              style={{ width: data.relevance.score + "%" }}
+            ></div>
+          </div>
+          <Like
+            className="pb-2 pl-3"
+            boostId={data.boost_id}
+            feedbackId={data.relevance.feedbackId}
+            isLiked={data.relevance.isLiked}
+          />
         </div>
       </SubCard>
       <SubCard>
@@ -53,21 +70,37 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
         <AnalysisParagraph
           text={data.achievements.feedback}
         ></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
-          <div
-            className="h-full rounded-full bg-yellow-400/80 text-center text-xs text-white"
-            style={{ width: data.achievements.score + "%" }}
-          ></div>
+        <div className="flex w-full flex-row items-center justify-center">
+          <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
+            <div
+              className="h-full rounded-full bg-yellow-400/80 text-center text-xs text-white"
+              style={{ width: data.achievements.score + "%" }}
+            ></div>
+          </div>
+          <Like
+            className="pb-2 pl-3"
+            boostId={data.boost_id}
+            feedbackId={data.achievements.feedbackId}
+            isLiked={data.achievements.isLiked}
+          />
         </div>
       </SubCard>
       <SubCard last>
         <AnalysisSubTitle title="Keywords"></AnalysisSubTitle>
         <AnalysisParagraph text={data.keywords.feedback}></AnalysisParagraph>
-        <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
-          <div
-            className="h-full rounded-full bg-fuchsia-400/80 text-center text-xs text-white"
-            style={{ width: data.keywords.score + "%" }}
-          ></div>
+        <div className="flex w-full flex-row items-center justify-center">
+          <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
+            <div
+              className="h-full rounded-full bg-fuchsia-400/80 text-center text-xs text-white"
+              style={{ width: data.keywords.score + "%" }}
+            ></div>
+          </div>
+          <Like
+            className="pb-2 pl-3"
+            boostId={data.boost_id}
+            feedbackId={data.keywords.feedbackId}
+            isLiked={data.keywords.isLiked}
+          />
         </div>
       </SubCard>
     </Card>

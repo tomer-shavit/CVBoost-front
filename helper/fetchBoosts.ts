@@ -9,7 +9,6 @@ import {
 import { Feedback, Session } from "@prisma/client";
 import prisma from "../prisma/client";
 import { decryptText } from "./decrypt";
-import { decompressHex } from "./decopmress";
 
 const dbEditedLineToApiEditedLine = (
   dbEditedLine: Feedback,
@@ -17,6 +16,7 @@ const dbEditedLineToApiEditedLine = (
 ): EditedLine => {
   return {
     feedbackId: dbEditedLine.feedbackId,
+    isLiked: dbEditedLine.isLiked,
     old_line: dbEditedLine.feedbackTextReference
       ? decryptText(dbEditedLine.feedbackTextReference, key)
       : "Fail",
@@ -33,6 +33,7 @@ const dbFeedbackToApiFeedback = (
   return {
     feedbackId: dbFeedback.feedbackId,
     feedbackType: dbFeedback.feedbackType,
+    isLiked: dbFeedback.isLiked,
     feedback: dbFeedback.feedbackText
       ? decryptText(dbFeedback.feedbackText, key)
       : "",

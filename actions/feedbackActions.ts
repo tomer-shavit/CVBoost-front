@@ -8,12 +8,10 @@ export async function setFeedbackLiked(
   feedbackId: number,
   isLiked: boolean,
 ) {
-  const updatedFeedback = await prisma.feedback.update({
+  await prisma.feedback.update({
     where: { feedbackId },
     data: { isLiked },
   });
 
   revalidatePath(`/boost/${boostId}`);
-
-  return updatedFeedback;
 }

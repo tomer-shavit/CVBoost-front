@@ -5,6 +5,7 @@ import NewLine from "./NewLine";
 import { HiOutlineSparkles } from "react-icons/hi";
 import SubCard from "./SubCard";
 import Card from "./Card";
+import { Like } from "./Like";
 
 const SuggestionsCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
   return (
@@ -17,9 +18,19 @@ const SuggestionsCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
       </h5>
       {data.edited_lines.map((line, index) => {
         return (
-          <SubCard last={index === data.edited_lines.length - 1} key={index}>
+          <SubCard
+            className="pb-3"
+            last={index === data.edited_lines.length - 1}
+            key={index}
+          >
             <OldLine text={line.old_line}></OldLine>
             <NewLine text={line.new_line}></NewLine>
+            <Like
+              boostId={data.boost_id}
+              isLiked={line.isLiked}
+              feedbackId={line.feedbackId}
+              className="noSelect flex w-full select-none justify-end pt-2"
+            />
           </SubCard>
         );
       })}

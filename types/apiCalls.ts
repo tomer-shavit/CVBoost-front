@@ -9,6 +9,7 @@ export enum FeedbackType {
 
 export type EditedLine = {
   feedbackId: number;
+  isLiked: boolean;
   old_line: string;
   new_line: string;
 };
@@ -16,6 +17,7 @@ export type EditedLine = {
 export type Feedback = {
   feedbackId: number;
   feedbackType: FeedbackType;
+  isLiked: boolean;
   feedback: string;
   score: number;
 };
@@ -40,30 +42,35 @@ export const emptyBoostResponse: BoostResponse = {
   edited_lines: [],
   clarity: {
     feedbackId: 0,
+    isLiked: false,
     feedbackType: FeedbackType.CLARITY,
     feedback: "",
     score: 0,
   },
   relevance: {
     feedbackId: 0,
+    isLiked: false,
     feedback: "",
     feedbackType: FeedbackType.RELEVANCE,
     score: 0,
   },
   achievements: {
     feedbackId: 0,
+    isLiked: false,
     feedback: "",
     feedbackType: FeedbackType.ACHIEVEMENTS,
     score: 0,
   },
   keywords: {
     feedbackId: 0,
+    isLiked: false,
     feedback: "",
     feedbackType: FeedbackType.KEYWORDS,
     score: 0,
   },
   summary: {
     feedbackId: 0,
+    isLiked: false,
     feedback: "",
     feedbackType: FeedbackType.SUMMARY,
     score: 0,
