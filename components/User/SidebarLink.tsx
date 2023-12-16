@@ -1,8 +1,13 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { deleteAccount } from "@/actions/feedbackActions";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 const SidebarLink = () => {
+  const { data: session } = useSession();
+  const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
       <li className="block">
@@ -23,13 +28,21 @@ const SidebarLink = () => {
         >
           Sign Out
         </p>
-        <p
-          onClick={() => signOut({ callbackUrl: "/" })}
+        <button
+          onClick={() => setModalOpen(true)}
           className={`flex w-full cursor-pointer rounded-sm px-3 py-2 text-base text-red-500`}
         >
           Delete Account
-        </p>
-      </li>
+        </button>
+      </li>{" "}
+      {session?.user?.id && (
+        <DeleteAccountModal
+          userId={session?.user?.id}
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          onConfirm={deleteAccount}
+        />
+      )}
     </>
   );
 };
