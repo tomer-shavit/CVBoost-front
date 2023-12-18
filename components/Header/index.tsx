@@ -142,6 +142,7 @@ const Header = () => {
                           ? "text-primary hover:text-primary"
                           : "hover:text-primary"
                       }
+                      target={menuItem.target}
                     >
                       {menuItem.title}
                     </Link>

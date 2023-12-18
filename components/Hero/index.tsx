@@ -11,7 +11,7 @@ const Hero = () => {
                 🔥 Boost Your Resume With AI
               </h4>
               <h1 className="mb-5 pr-16 text-3xl font-bold text-black dark:text-white xl:text-hero ">
-                The Shortcut To Your{" "}
+                A Shortcut To Your{" "}
                 <span className="relative inline-block before:absolute before:bottom-2.5 before:left-0 before:-z-1 before:h-3 before:w-full before:bg-titlebg dark:before:bg-titlebgdark ">
                   Dream Job
                 </span>
@@ -58,14 +58,14 @@ const Hero = () => {
                 />
                 <div className=" relative aspect-[700/444] w-full">
                   <Image
-                    className="shadow-solid-l dark:hidden"
-                    src="/images/hero/hero-light.svg"
+                    className="rounded-lg border  shadow-solid-l dark:hidden"
+                    src="/images/hero/hero-light.png"
                     alt="Hero"
                     fill
                   />
                   <Image
                     className="hidden shadow-solid-l dark:block"
-                    src="/images/hero/hero-dark.svg"
+                    src="/images/hero/hero-dark.png"
                     alt="Hero"
                     fill
                   />

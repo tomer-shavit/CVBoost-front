@@ -35,8 +35,8 @@ export default function Home() {
       {/* <Integration /> */}
       <Testimonial />
       <FAQ />
-      <CTA />
       {/* <Pricing /> */}
+      <CTA />
       {/* <Contact /> */}
       {/* <Blog /> */}
       <ScrollToTop />
