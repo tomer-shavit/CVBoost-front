@@ -3,7 +3,7 @@ import prisma from "../prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { AdapterUser } from "next-auth/adapters";
 
-const INIT_RESUMES = 2;
+const INIT_RESUMES = 1;
 
 const customCreateUser: (
   user: Omit<AdapterUser, "id">,
