@@ -20,6 +20,7 @@ const UserPage = async () => {
   }
 
   const wrappedUser = await fetchUser(sessionData?.user?.id, seed);
+
   if (wrappedUser.error) {
     console.log("Error fetching user", wrappedUser.error);
     redirect("/error");
