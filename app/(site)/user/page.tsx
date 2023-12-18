@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "This is the User page for CVBoost.",
 };
 
-export const UserPage = async () => {
+const UserPage = async () => {
   const sessionData = await getServerSession(authOptions);
   const seed = process.env.ENCRYPTION_SEED ? process.env.ENCRYPTION_SEED : "";
 
