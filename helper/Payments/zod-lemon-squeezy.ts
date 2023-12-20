@@ -33,7 +33,7 @@ const SAttributes = z.object({
   product_id: z.number(),
   name: z.string(),
   slug: z.string(),
-  description: z.string(),
+  description: z.string().nullable(),
   price: z.number(),
   is_subscription: z.boolean(),
   interval: z.string().nullable(),

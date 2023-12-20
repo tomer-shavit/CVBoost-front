@@ -31,7 +31,7 @@ function createRequestOptions(method: string, headers: Headers): RequestInit {
 export async function getProductVariants(
   productId: string,
 ): Promise<TLemonSqueezyRequest> {
-  const url = `${lemonSqueezyBaseUrl}/variants?filter[product_id]=${149799}`;
+  const url = `${lemonSqueezyBaseUrl}/variants?filter[product_id]=${productId}`;
   // const url = `${lemonSqueezyBaseUrl}/variants`;
   const headers = createHeaders();
   const requestOptions = createRequestOptions("GET", headers);
@@ -43,9 +43,9 @@ export async function getProductVariants(
   const data = await response.json();
 
   console.log("---------------------");
-  console.log("data:", data);
+  console.log(JSON.stringify(data, null, 2));
   console.log("---------------------");
-  const parsedData = SLemonSqueezyRequest.parse(data.data[0]);
+  const parsedData = SLemonSqueezyRequest.parse(data);
 
   return parsedData;
 }
