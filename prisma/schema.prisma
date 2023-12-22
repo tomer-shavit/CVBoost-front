@@ -22,12 +22,18 @@ model User {
   resumeBoostsAvailable  Int
   resumeBoostsTotal  Int
   resumeBoosts       ResumeBoost[] // Opposite relation field
-  // Define the email index
+  userName                String?
+  userAddress            String?
+  userCity               String?
+  userCountry            String?
+  userZipCode            String?
   @@index([email], name: "idxEmail")
   //nextAuth
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  subscriptions Subscription[]
 }
 
 // Define the User table
@@ -97,4 +103,61 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// Pyaments:
+model Subscription {
+  subscriptionId          Int                    @id 
+  lemonCustomerId         Int
+  userId                  String
+  userName                String
+  userAddress            String
+  userCity               String
+  userCountry            String
+  userZipCode            String
+  productId               Int
+  productName             String
+  varientId               Int
+  varientName             String
+  status                  String
+  subscriptionInvoices    SubscriptionInvoice[]
+  refunded                Boolean
+  refundedAt              DateTime?              @db.DateTime
+  totalUsd                Float
+  taxUsd                  Float
+  subtotalUsd             Float
+  sumUsd                  Float
+  billingAnchor           Int
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  UpdatePaymentMethodUrl  String
+  CustomerPortalUrl       String
+
+  user                    User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idxSubscriptionUserId")
+}
+
+// New SubscriptionInvoice model
+model SubscriptionInvoice {
+  subscriptionInvoiceId  Int         @id 
+  subscriptionId         Int
+  status                 String
+  billingReason          String
+  totalUsd               Float
+  taxUsd                 Float
+  subtotalUsd            Float
+  discountUsd            Float
+  refunded               Boolean
+  refundedAt             DateTime?   @db.DateTime
+  invoiceUrl             String
+  storeUrl               String
+  subscriptionUrl        String
+  customerUrl            String
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+
+  subscription           Subscription @relation(fields: [subscriptionId], references: [subscriptionId], onDelete: Cascade)
+
+  @@index([subscriptionId], name: "idxSubscriptionInvoiceSubscriptionId")
 }

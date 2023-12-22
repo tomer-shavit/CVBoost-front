@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/components/Header";
 import ApiLoader from "@/components/Loader";
 import { UploadSection } from "@/components/Upload";
 import useFetchWithFile from "@/hooks/useFetchWithFile";

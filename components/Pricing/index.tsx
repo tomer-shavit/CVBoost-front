@@ -6,7 +6,7 @@ import { PricingHeader } from "./PricingHeader";
 import { useEffect, useState } from "react";
 import { TLemonSqueezyRequest } from "@/helper/Payments/zod-lemon-squeezy";
 
-const Pricing = () => {
+const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
   const [products, setProducts] = useState<TLemonSqueezyRequest | null>(null);
 
   useEffect(() => {
@@ -20,17 +20,23 @@ const Pricing = () => {
   return (
     <>
       <section className="overflow-hidden pb-20 pt-15 lg:pb-25 xl:pb-30">
-        <PricingHeader />
-        <div className="relative mx-auto mt-15 max-w-[1207px] px-4 md:px-8 xl:mt-20 xl:px-0">
+        <PricingHeader hasHeader={hasHeader} />
+        <div className="relative mx-auto mt-8 max-w-[1207px] px-4 md:px-8 xl:mt-12 xl:px-0">
           <DotsBackground />
           {products ? (
-            <div className="flex flex-wrap justify-center gap-7.5 lg:flex-nowrap xl:gap-12.5">
+            <div className="flex flex-wrap justify-center gap-7.5  lg:flex-nowrap xl:gap-12.5">
               {products.data
                 .filter((product) => product.attributes.name !== "Default")
                 .map((product, index) => (
                   <PricingCard
                     key={index}
+                    varientId={product.id}
                     name={product.attributes.name}
+                    featuresDomElementsString={
+                      product.attributes.description
+                        ? product.attributes.description
+                        : ""
+                    }
                     price={product.attributes.price}
                     isPopular={product.attributes.name === "Standard"}
                   />
