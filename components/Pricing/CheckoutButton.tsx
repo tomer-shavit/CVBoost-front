@@ -1,40 +1,31 @@
-import Script from "next/script";
+"use client";
+
+import { createCheckoutLink } from "@/helper/Payments/paymentsParsing";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
+import { useEffect, useState } from "react";
 
 export const CheckoutButton: React.FC<{ varientId: string }> = ({
   varientId,
 }) => {
+  const { data: session } = useSession();
+  const [checkoutLink, setCheckoutLink] = useState("");
+  useEffect(() => {
+    if (session) {
+      setCheckoutLink(
+        createCheckoutLink(varientId, session?.user?.email, session?.user?.id),
+      );
+    }
+  }, [session]);
   return (
     <button
       aria-label="Get the Plan button"
       className="group/btn inline-flex items-center gap-2.5 font-medium text-primary transition-all duration-300 dark:text-white dark:hover:text-primary"
+      onClick={() => console.log(varientId)}
     >
-      <a
-        href="https://cvboost.lemonsqueezy.com/checkout/buy/1d104fa1-108c-41e5-8ebf-18179a53a9ee?embed=1"
-        className="lemonsqueezy-button"
-      >
+      <a href={checkoutLink} className="lemonsqueezy-button">
         Buy CVBoost
       </a>
-      <Script
-        src="https://assets.lemonsqueezy.com/lemon.js"
-        onLoad={() =>
-          // @ts-ignore
-          window.createLemonSqueezy()
-        }
-        defer
-      ></Script>
-      {/* <a
-        href={`https://cvboost.lemonsqueezy.com/checkout/buy/1d104fa1-108c-41e5-8ebf-18179a53a9ee?embed=1&enabled=${varientId}`}
-        className={`lemonsqueezy-button`}
-      >
-        Get a daily email digest for $5/mo
-      </a>
-      <Script
-        src="https://app.lemonsqueezy.com/js/lemon.js"
-        onLoad={() =>
-          // @ts-ignore
-          window.createLemonSqueezy()
-        }
-      /> */}
       <svg
         width="14"
         height="14"

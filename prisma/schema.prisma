@@ -22,11 +22,6 @@ model User {
   resumeBoostsAvailable  Int
   resumeBoostsTotal  Int
   resumeBoosts       ResumeBoost[] // Opposite relation field
-  userName                String?
-  userAddress            String?
-  userCity               String?
-  userCountry            String?
-  userZipCode            String?
   @@index([email], name: "idxEmail")
   //nextAuth
   image         String?

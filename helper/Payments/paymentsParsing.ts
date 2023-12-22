@@ -1,3 +1,6 @@
+import { env } from "process";
+import { getProductIdByVarientId } from "./mapping";
+
 export function splitNumber(value: number): [number, number] {
   const stringValue = value.toString();
   const middle = stringValue.length - 2;
@@ -17,4 +20,23 @@ export function extractFeatureData(htmlString: string): string[] {
   const extractedData = listItems.map((li) => li.textContent?.trim() || "");
 
   return extractedData;
+}
+
+export function createCheckoutLink(
+  variantId: string,
+  email?: string | null,
+  userId?: string | null,
+) {
+  console.log("variantId", variantId);
+  let productId = getProductIdByVarientId(variantId);
+  let url = new URL(`https://shop.cvboost.ai/checkout/buy/${productId}`);
+  url.searchParams.set("enabled", variantId);
+  if (userId) {
+    url.searchParams.set("checkout[custom][userId]", userId);
+  }
+  if (email) {
+    url.searchParams.set("checkout[email]", email);
+  }
+  console.log("url", url.toString());
+  return url.toString();
 }
