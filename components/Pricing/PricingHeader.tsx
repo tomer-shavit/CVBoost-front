@@ -10,7 +10,7 @@ export const PricingHeader: React.FC<{ hasHeader?: boolean }> = ({
           headerInfo={{
             title: hasHeader ? `PRICING PLANS` : ``,
             subtitle: `Simple Pricing`,
-            description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor eros. Donec vitae tortor lacus. Phasellus aliquam ante in maximus.`,
+            description: ``,
           }}
         />
       </div>

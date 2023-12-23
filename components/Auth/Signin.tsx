@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const Signin = () => {
+  const callbackUrl = useSearchParams().get("callbackUrl") || "/boost";
   const handleSignIn = (provider) => {
-    signIn(provider, { callbackUrl: "/boost" });
+    signIn(provider, { callbackUrl });
   };
 
   return (
