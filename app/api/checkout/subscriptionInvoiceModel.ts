@@ -25,7 +25,7 @@ const subscriptionInvoiceAttributesSchema = z.object({
   updated_at: z.string(),
   user_email: z.string(),
   customer_id: z.number(),
-  refunded_at: z.null().optional(),
+  refunded_at: z.union([z.string(), z.null()]).optional(),
   subtotal_usd: z.number(),
   currency_rate: z.string(),
   tax_formatted: z.string(),
@@ -61,6 +61,7 @@ const metaSchema = z.object({
   custom_data: z
     .object({
       userId: z.string(),
+      variantId: z.string(),
     })
     .optional(),
 });
@@ -69,3 +70,6 @@ export const WebhookSubscriptionInvoiceResponse = z.object({
   data: subscriptionInvoiceSchema,
   meta: metaSchema,
 });
+export type TWebhookSubscriptionInvoiceResponse = z.infer<
+  typeof WebhookSubscriptionInvoiceResponse
+>;

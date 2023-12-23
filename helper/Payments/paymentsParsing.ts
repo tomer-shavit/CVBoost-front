@@ -27,7 +27,6 @@ export function createCheckoutLink(
   email?: string | null,
   userId?: string | null,
 ) {
-  console.log("variantId", variantId);
   let productId = getProductIdByVarientId(variantId);
   let url = new URL(`https://shop.cvboost.ai/checkout/buy/${productId}`);
   url.searchParams.set("enabled", variantId);
@@ -37,6 +36,8 @@ export function createCheckoutLink(
   if (email) {
     url.searchParams.set("checkout[email]", email);
   }
+  url.searchParams.set("checkout[custom][variantId]", variantId);
+
   console.log("url", url.toString());
   return url.toString();
 }

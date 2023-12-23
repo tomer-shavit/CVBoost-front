@@ -5,15 +5,15 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import { useEffect, useState } from "react";
 
-export const CheckoutButton: React.FC<{ varientId: string }> = ({
-  varientId,
+export const CheckoutButton: React.FC<{ variantId: string }> = ({
+  variantId: variantId,
 }) => {
   const { data: session } = useSession();
   const [checkoutLink, setCheckoutLink] = useState("");
   useEffect(() => {
     if (session) {
       setCheckoutLink(
-        createCheckoutLink(varientId, session?.user?.email, session?.user?.id),
+        createCheckoutLink(variantId, session?.user?.email, session?.user?.id),
       );
     }
   }, [session]);
@@ -21,7 +21,7 @@ export const CheckoutButton: React.FC<{ varientId: string }> = ({
     <button
       aria-label="Get the Plan button"
       className="group/btn inline-flex items-center gap-2.5 font-medium text-primary transition-all duration-300 dark:text-white dark:hover:text-primary"
-      onClick={() => console.log(varientId)}
+      onClick={() => console.log(variantId)}
     >
       <a href={checkoutLink} className="lemonsqueezy-button">
         Buy CVBoost

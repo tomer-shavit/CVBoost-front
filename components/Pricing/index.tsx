@@ -30,7 +30,7 @@ const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
                 .map((product, index) => (
                   <PricingCard
                     key={index}
-                    varientId={product.id}
+                    variantId={product.id}
                     name={product.attributes.name}
                     featuresDomElementsString={
                       product.attributes.description

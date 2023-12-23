@@ -1,47 +1,120 @@
-import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { WebhookSubscriptionInvoiceResponse } from "../../subscriptionInvoiceModel";
-// import { SubscriptionInvoiceSchemaLS } from "../../models";
+import {
+  boostsToBeAdded,
+  extactSubscriptionInvoiceFromRequest,
+} from "@/helper/Payments/webhooks";
+import prisma from "../../../../../prisma/client";
+import { TWebhookSubscriptionInvoiceResponse } from "../../subscriptionInvoiceModel";
 
 export async function POST(request: Request) {
-  console.log("------------------------");
   console.log("PAYMENT SUCCESSFUL");
-  console.log("------------------------");
   const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
+  try {
+    if (!secret) {
+      throw new Error("LEMON_SQUEEZY_SIGNING_SECRET is not set");
+    }
 
-  if (!secret) {
-    throw new Error("LEMON_SQUEEZY_SIGNING_SECRET is not set");
+    const parsedBody = await extactSubscriptionInvoiceFromRequest(
+      request,
+      secret,
+    );
+    validateCustomDataInParsedBody(parsedBody);
+
+    const [totalBoosts, boostsAvailable] =
+      await validateUserAndGetBoostsData(parsedBody);
+
+    await createSubscriptionInvoice(
+      parsedBody,
+      parsedBody.meta.custom_data?.userId
+        ? parsedBody.meta.custom_data?.userId
+        : "",
+    );
+    console.log("Subscription Invoice created in the db");
+    await updateUserBoosts(parsedBody, totalBoosts, boostsAvailable);
+    console.log("Boosts updated");
+  } catch (error) {
+    console.log("error", error);
+    return NextResponse.json({ error: error.message });
   }
-  const rawBody = await request.text();
 
-  if (!rawBody) {
-    throw new Error("No body");
-  }
-
-  const xSignature = request.headers.get("X-Signature");
-
-  const hmac = crypto.createHmac("sha256", secret);
-
-  hmac.update(rawBody);
-  const digest = hmac.digest("hex");
-
-  if (
-    !xSignature ||
-    !crypto.timingSafeEqual(
-      Buffer.from(digest, "hex"),
-      Buffer.from(xSignature, "hex"),
-    )
-  ) {
-    throw new Error("Invalid signature.");
-  }
-
-  const body = JSON.parse(rawBody);
-
-  const parsedBody = WebhookSubscriptionInvoiceResponse.parse(body);
-  console.log("------------------------");
-  console.log("SUCCESS parsedBody", parsedBody);
-  console.log("------------------------");
   return NextResponse.json({
     status: "ok",
+    message: "Subscription Invoice created in the db, boosts updated",
   });
 }
+
+const updateUserBoosts = async (
+  parsedBody: TWebhookSubscriptionInvoiceResponse,
+  totalBoosts: number,
+  boostsAvailable: number,
+) => {
+  const extraBoosts = boostsToBeAdded(parsedBody.meta.custom_data?.variantId);
+
+  await prisma.user.update({
+    where: { id: parsedBody.meta.custom_data?.userId },
+    data: {
+      resumeBoostsAvailable: boostsAvailable + extraBoosts,
+      resumeBoostsTotal: totalBoosts + extraBoosts,
+    },
+  });
+};
+
+const validateUserAndGetBoostsData = async (
+  parsedBody: TWebhookSubscriptionInvoiceResponse,
+) => {
+  const user = await prisma.user.findUnique({
+    where: { id: parsedBody.meta.custom_data?.userId },
+  });
+
+  if (!user) {
+    throw new Error(
+      "User not found in the DB while creating subscription invoice.",
+    );
+  }
+  return [user.resumeBoostsTotal, user.resumeBoostsAvailable];
+};
+
+const createSubscriptionInvoice = async (
+  parsedBody: TWebhookSubscriptionInvoiceResponse,
+  userId: string,
+) => {
+  const subscriptionInvoiceData = parsedBody.data.attributes;
+  await prisma.subscriptionInvoice.create({
+    data: {
+      subscriptionInvoiceId: parseInt(parsedBody.data.id),
+      subscriptionId: subscriptionInvoiceData.subscription_id,
+      userId: userId,
+      status: subscriptionInvoiceData.status,
+      billingReason: subscriptionInvoiceData.billing_reason,
+      totalUsd: subscriptionInvoiceData.total_usd,
+      taxUsd: subscriptionInvoiceData.tax_usd,
+      subtotalUsd: subscriptionInvoiceData.subtotal_usd,
+      discountUsd: subscriptionInvoiceData.discount_total_usd,
+      refunded: subscriptionInvoiceData.refunded,
+      refundedAt: subscriptionInvoiceData.refunded_at
+        ? new Date(subscriptionInvoiceData.refunded_at)
+        : null,
+      invoiceUrl: subscriptionInvoiceData.urls.invoice_url,
+      storeUrl: parsedBody.data.relationships.store.links.self,
+      subscriptionUrl: parsedBody.data.relationships.subscription.links.self,
+      customerUrl: parsedBody.data.relationships.customer.links.self,
+      createdAt: new Date(subscriptionInvoiceData.created_at),
+      updatedAt: new Date(subscriptionInvoiceData.updated_at),
+    },
+  });
+};
+
+const validateCustomDataInParsedBody = (
+  parsedBody: TWebhookSubscriptionInvoiceResponse,
+) => {
+  if (!parsedBody.meta.custom_data?.userId) {
+    throw new Error(
+      "UserId not found in lemon squeezy payment success webhook",
+    );
+  }
+  if (!parsedBody.meta.custom_data?.variantId) {
+    throw new Error(
+      "VariantId not found in lemon squeezy payment success webhook",
+    );
+  }
+};

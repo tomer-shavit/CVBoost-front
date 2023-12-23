@@ -6,83 +6,85 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma" 
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 // Define the database schema using Prisma
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
-  emailVerified DateTime?
-  createdAt          DateTime  @default(now()) 
-  updatedAt          DateTime  @updatedAt
-  resumeBoostsAvailable  Int
-  resumeBoostsTotal  Int
-  resumeBoosts       ResumeBoost[] // Opposite relation field
-  @@index([email], name: "idxEmail")
+  id                    String        @id @default(cuid())
+  name                  String?
+  email                 String        @unique
+  emailVerified         DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  resumeBoostsAvailable Int
+  resumeBoostsTotal     Int
+  resumeBoosts          ResumeBoost[] // Opposite relation field
   //nextAuth
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  image                 String?
+  accounts              Account[]
+  sessions              Session[]
 
-  subscriptions Subscription[]
+  subscriptions        Subscription[]
+  subscriptionInvoices SubscriptionInvoice[]
+
+  @@index([email], name: "idxEmail")
 }
 
 // Define the User table
 
 // Define the ResumeBoost table
 model ResumeBoost {
-  boostId        Int       @id @default(autoincrement())
-  userId         String
-  createdAt      DateTime  @default(now()) 
-  boostVersion   Int       // Enum BoostVerstion saved in resume function
-  resumeHash     Bytes     // Using SHA 256
-  resumeText     String?   @db.Text // Optional: storing the encrypted resume text
-  
-  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  feedbacks      Feedback[]
+  boostId      Int      @id @default(autoincrement())
+  userId       String
+  createdAt    DateTime @default(now())
+  boostVersion Int // Enum BoostVerstion saved in resume function
+  resumeHash   Bytes // Using SHA 256
+  resumeText   String?  @db.Text // Optional: storing the encrypted resume text
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedbacks Feedback[]
+
   @@index([resumeHash(length: 32)], name: "idxResumeHash")
 }
 
-
-
 model Feedback {
-  feedbackId        Int       @id @default(autoincrement())
-  boostId           Int
-  createdAt         DateTime  @default(now()) 
-  feedbackType      Int // Enum FeedbackType saved in resume function
-  feedbackText      String    @db.Text // The feedback text MUST be compressed! 
-  feedbackTextReference String? @db.Text // The feedback text MUST be compressed!
-  score             Int?
-  isLiked           Boolean
-  boost             ResumeBoost @relation(fields: [boostId], references: [boostId], onDelete: Cascade)
+  feedbackId            Int         @id @default(autoincrement())
+  boostId               Int
+  createdAt             DateTime    @default(now())
+  feedbackType          Int // Enum FeedbackType saved in resume function
+  feedbackText          String      @db.Text // The feedback text MUST be compressed! 
+  feedbackTextReference String?     @db.Text // The feedback text MUST be compressed!
+  score                 Int?
+  isLiked               Boolean
+  boost                 ResumeBoost @relation(fields: [boostId], references: [boostId], onDelete: Cascade)
+
   @@index([boostId], name: "idxBoostId")
 }
-
 
 //Next auth tabels
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -90,7 +92,6 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
 
 model VerificationToken {
   identifier String
@@ -102,57 +103,47 @@ model VerificationToken {
 
 // Pyaments:
 model Subscription {
-  subscriptionId          Int                    @id 
-  lemonCustomerId         Int
-  userId                  String
-  userName                String
-  userAddress            String
-  userCity               String
-  userCountry            String
-  userZipCode            String
-  productId               Int
-  productName             String
-  varientId               Int
-  varientName             String
-  status                  String
-  subscriptionInvoices    SubscriptionInvoice[]
-  refunded                Boolean
-  refundedAt              DateTime?              @db.DateTime
-  totalUsd                Float
-  taxUsd                  Float
-  subtotalUsd             Float
-  sumUsd                  Float
-  billingAnchor           Int
-  createdAt               DateTime               @default(now())
-  updatedAt               DateTime               @updatedAt
-  UpdatePaymentMethodUrl  String
-  CustomerPortalUrl       String
+  subscriptionId         Int      @id
+  lemonCustomerId        Int
+  userId                 String
+  userName               String
+  productId              Int
+  productName            String
+  variantId              Int @map("variantId")
+  varientName            String
+  status                 String
+  billingAnchor          Int
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  updatePaymentMethodUrl String
+  customerPortalUrl      String
 
-  user                    User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], name: "idxSubscriptionUserId")
 }
 
 // New SubscriptionInvoice model
 model SubscriptionInvoice {
-  subscriptionInvoiceId  Int         @id 
-  subscriptionId         Int
-  status                 String
-  billingReason          String
-  totalUsd               Float
-  taxUsd                 Float
-  subtotalUsd            Float
-  discountUsd            Float
-  refunded               Boolean
-  refundedAt             DateTime?   @db.DateTime
-  invoiceUrl             String
-  storeUrl               String
-  subscriptionUrl        String
-  customerUrl            String
-  createdAt              DateTime    @default(now())
-  updatedAt              DateTime    @updatedAt
+  subscriptionInvoiceId Int       @id
+  subscriptionId        Int
+  userId                String
+  status                String
+  billingReason         String
+  totalUsd              Float
+  taxUsd                Float
+  subtotalUsd           Float
+  discountUsd           Float
+  refunded              Boolean
+  refundedAt            DateTime? @db.DateTime
+  invoiceUrl            String
+  storeUrl              String
+  subscriptionUrl       String
+  customerUrl           String
+  createdAt             DateTime  
+  updatedAt             DateTime  @updatedAt
 
-  subscription           Subscription @relation(fields: [subscriptionId], references: [subscriptionId], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([subscriptionId], name: "idxSubscriptionInvoiceSubscriptionId")
+  @@index([userId], name: "idxSubscriptionInvoiceUserId") // Add this line for efficient querying
 }

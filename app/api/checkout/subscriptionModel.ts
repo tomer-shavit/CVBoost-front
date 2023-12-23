@@ -80,3 +80,7 @@ export const WebhookSubscriptionResponse = z.object({
   data: subscriptionSchema,
   meta: metaSchema,
 });
+
+export type TWebhookSubscriptionResponse = z.infer<
+  typeof WebhookSubscriptionResponse
+>;

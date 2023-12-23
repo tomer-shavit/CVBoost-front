@@ -6,12 +6,18 @@ import { FaCheck } from "react-icons/fa";
 import { CheckoutButton } from "./CheckoutButton";
 
 export const PricingCard: React.FC<{
-  varientId: string;
+  variantId: string;
   isPopular?: boolean;
   price: number;
   name: string;
   featuresDomElementsString: string;
-}> = ({ varientId, isPopular, price, name, featuresDomElementsString }) => {
+}> = ({
+  variantId: variantId,
+  isPopular,
+  price,
+  name,
+  featuresDomElementsString,
+}) => {
   const [integer, decimal] = splitNumber(price);
   const features = extractFeatureData(featuresDomElementsString);
   return (
@@ -46,7 +52,7 @@ export const PricingCard: React.FC<{
           ))}
         </ul>
       </div>
-      <CheckoutButton varientId={varientId} />
+      <CheckoutButton variantId={variantId} />
     </div>
   );
 };

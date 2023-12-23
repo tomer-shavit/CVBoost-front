@@ -1,10 +1,19 @@
-export const getProductIdByVarientId = (varientId: string): string => {
-  if (varientId === "187368") {
-    return "1d104fa1-108c-41e5-8ebf-18179a53a9ee";
-  } else if (varientId === "187369") {
-    return "f3aaae9e-5abc-4f6c-b8e3-4ff71ef685e7";
-  } else if (varientId === "187371") {
-    return "7b3baf33-b2d7-4bd0-a788-d6f6f0c8b7df";
+import {
+  BASIC_PRODCUT_ID,
+  BASIC_VARIANT_ID,
+  PRO_PRODUCT_ID,
+  PRO_VARIANT_ID,
+  STANDARD_PRODUCT_ID,
+  STANDARD_VARIANT_ID,
+} from "@/constants/payments";
+
+export const getProductIdByVarientId = (variantId: string): string => {
+  if (variantId === BASIC_VARIANT_ID) {
+    return BASIC_PRODCUT_ID;
+  } else if (variantId === STANDARD_VARIANT_ID) {
+    return STANDARD_PRODUCT_ID;
+  } else if (variantId === PRO_VARIANT_ID) {
+    return PRO_PRODUCT_ID;
   }
   return "";
 };

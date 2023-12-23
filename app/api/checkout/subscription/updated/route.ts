@@ -1,47 +1,101 @@
-import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { WebhookSubscriptionResponse } from "../../subscriptionModel";
+import { TWebhookSubscriptionResponse } from "../../subscriptionModel";
+import prisma from "@/prisma/client";
+import { extactSubscriptionFromRequest } from "@/helper/Payments/webhooks";
 
 export async function POST(request: Request) {
   console.log("------------------------");
   console.log("SUBSCRIPTION UPDATED");
   console.log("------------------------");
   const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
+  try {
+    if (!secret) {
+      throw new Error("LEMON_SQUEEZY_SIGNING_SECRET is not set");
+    }
 
-  if (!secret) {
-    throw new Error("LEMON_SQUEEZY_SIGNING_SECRET is not set");
+    const parsedBody = await extactSubscriptionFromRequest(request, secret);
+
+    if (!parsedBody.meta.custom_data?.userId) {
+      throw new Error(
+        "UserId not found in lemon squeezy subscription_updated webhook",
+      );
+    }
+    await validateUser(parsedBody);
+    const doesExsist = await isSubscriptionExist(parsedBody);
+
+    if (!doesExsist) {
+      return NextResponse.json({
+        status: "ok",
+        message: "Subscription doesn't exist in the db yet.",
+      });
+    }
+
+    await updateSubscription(parsedBody, parsedBody.meta.custom_data?.userId);
+
+    if (parsedBody.data.attributes.status === "unpaid") {
+      await handleUnpaidSubscription(parsedBody);
+    }
+  } catch (error) {
+    return NextResponse.json({ error: error.message });
   }
-  const rawBody = await request.text();
-
-  if (!rawBody) {
-    throw new Error("No body");
-  }
-
-  const xSignature = request.headers.get("X-Signature");
-
-  const hmac = crypto.createHmac("sha256", secret);
-
-  hmac.update(rawBody);
-  const digest = hmac.digest("hex");
-
-  if (
-    !xSignature ||
-    !crypto.timingSafeEqual(
-      Buffer.from(digest, "hex"),
-      Buffer.from(xSignature, "hex"),
-    )
-  ) {
-    throw new Error("Invalid signature.");
-  }
-
-  const body = JSON.parse(rawBody);
-
-  const parsedBody = WebhookSubscriptionResponse.parse(body);
-  console.log("------------------------");
-  console.log("UPDATED parsedBody", parsedBody);
-  console.log("------------------------");
 
   return NextResponse.json({
     status: "ok",
+    message: "Subscription created in the db",
   });
 }
+
+const validateUser = async (parsedBody: TWebhookSubscriptionResponse) => {
+  const user = await prisma.user.findUnique({
+    where: { id: parsedBody.meta.custom_data?.userId },
+  });
+
+  if (!user) {
+    throw new Error("User not found in the DB while creating subscription.");
+  }
+};
+
+const isSubscriptionExist = async (
+  parsedBody: TWebhookSubscriptionResponse,
+): Promise<boolean> => {
+  const subscription = await prisma.subscription.findUnique({
+    where: { subscriptionId: parseInt(parsedBody.data.id) },
+  });
+
+  return subscription ? true : false;
+};
+
+const updateSubscription = async (
+  parsedBody: TWebhookSubscriptionResponse,
+  userId: string,
+) => {
+  const subscriptionData = parsedBody.data.attributes;
+  await prisma.subscription.update({
+    where: { subscriptionId: parseInt(parsedBody.data.id) },
+    data: {
+      subscriptionId: parseInt(parsedBody.data.id),
+      lemonCustomerId: subscriptionData.customer_id,
+      userId: userId,
+      userName: subscriptionData.user_name,
+      productId: subscriptionData.product_id,
+      productName: subscriptionData.product_name,
+      variantId: subscriptionData.variant_id,
+      varientName: subscriptionData.variant_name,
+      status: subscriptionData.status,
+      billingAnchor: subscriptionData.billing_anchor,
+      createdAt: new Date(subscriptionData.created_at),
+      updatedAt: new Date(subscriptionData.updated_at),
+      updatePaymentMethodUrl: subscriptionData.urls.update_payment_method,
+      customerPortalUrl: subscriptionData.urls.customer_portal,
+    },
+  });
+};
+
+const handleUnpaidSubscription = async (
+  parsedBody: TWebhookSubscriptionResponse,
+) => {
+  await prisma.user.update({
+    where: { id: parsedBody.meta.custom_data?.userId },
+    data: { resumeBoostsAvailable: 0 },
+  });
+};
