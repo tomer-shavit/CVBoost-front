@@ -7,3 +7,4 @@ export const STANDARD_MONTHLY_BOOSTS = 10;
 export const PRO_PRODUCT_ID = "7b3baf33-b2d7-4bd0-a788-d6f6f0c8b7df";
 export const PRO_VARIANT_ID = "187371";
 export const PRO_MONTHLY_BOOSTS = 20;
+export const LS_API_BASE_URL = "https://api.lemonsqueezy.com/v1";

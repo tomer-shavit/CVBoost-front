@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import prisma from "../prisma/client";
 import { redirect } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { cancelSubscription } from "@/helper/Payments/crud";
 
 export async function setFeedbackLiked(
   boostId: number,
@@ -22,5 +23,6 @@ export async function deleteAccount(userId?: string) {
   if (!userId) {
     redirect("/");
   }
-  const user = await prisma.user.delete({ where: { id: userId } });
+  await cancelSubscription(userId);
+  await prisma.user.delete({ where: { id: userId } });
 }

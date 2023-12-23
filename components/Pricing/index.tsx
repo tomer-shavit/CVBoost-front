@@ -1,5 +1,5 @@
 "use client";
-import { getProductVariants } from "@/helper/Payments/fetchProducts";
+import { getProductVariants } from "@/helper/Payments/crud";
 import { DotsBackground } from "./DotsBackground";
 import { PricingCard } from "./PricingCard";
 import { PricingHeader } from "./PricingHeader";
