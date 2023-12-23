@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useState } from "react";
 import DeleteAccountModal from "./DeleteAccountModal";
 
-const SidebarLink = () => {
+const SidebarLink: React.FC<{ manageSubscriptionUrl?: string }> = ({
+  manageSubscriptionUrl,
+}) => {
   const { data: session } = useSession();
   const [isModalOpen, setModalOpen] = useState(false);
   return (
@@ -22,6 +24,16 @@ const SidebarLink = () => {
         >
           Boost New CV
         </Link>
+        {manageSubscriptionUrl && (
+          <Link
+            href={manageSubscriptionUrl}
+            className={`flex w-full rounded-sm px-3 py-2 text-base text-black dark:text-white `}
+            target="_blank"
+          >
+            Manage Subscription
+          </Link>
+        )}
+
         <p
           onClick={() => signOut({ callbackUrl: "/" })}
           className={`flex w-full cursor-pointer rounded-sm px-3 py-2 text-base text-black dark:text-white `}

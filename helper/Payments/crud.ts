@@ -35,7 +35,6 @@ export async function cancelSubscription(userId: string): Promise<void> {
   const activeSubscription = await prisma.subscription.findFirst({
     where: { userId: userId, status: "active" },
   });
-
   if (!activeSubscription) return Promise.resolve();
 
   const lemonSqueezyApiKey = process.env.LEMON_SQUEEZY_API_KEY;
