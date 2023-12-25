@@ -17,11 +17,21 @@ export async function saveBoostResponseToDB(
         "Encryption seed not found while saving boost response to DB",
       );
     }
+    const boostHash = hashText(boostResponse.resume_text);
+    const maybeBoost = await prisma.resumeBoost.findFirst({
+      where: {
+        resumeHash: boostHash,
+      },
+    });
+    if (maybeBoost) {
+      return maybeBoost;
+    }
+
     const resumeBoostData = {
       userId: userId,
       resumeText: encryptText(boostResponse.resume_text, secret),
       boostVersion: BoostVersion.V1,
-      resumeHash: hashText(boostResponse.resume_text),
+      resumeHash: boostHash,
     };
 
     const feedbacks: any[] = [];

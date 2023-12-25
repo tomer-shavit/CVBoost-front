@@ -30,7 +30,7 @@ const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
               transition={{ duration: 0.75, ease: "easeOut" }}
               exit={{ opacity: 0, y: "15%" }}
             >
-              <div className="flex flex-wrap justify-center gap-7.5  lg:flex-nowrap xl:gap-12.5">
+              <div className="flex flex-wrap justify-center gap-7.5 lg:flex-nowrap xl:gap-12.5">
                 {products.data
                   .filter((product) => product.attributes.name !== "Default")
                   .map((product, index) => (
