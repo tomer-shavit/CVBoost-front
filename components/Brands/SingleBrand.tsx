@@ -1,4 +1,3 @@
-import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Brand } from "@/types/brand";
 import { motion } from "framer-motion";
@@ -14,7 +13,6 @@ const SingleBrand = ({ brand }: { brand: Brand }) => {
             opacity: 0,
             y: -20,
           },
-
           visible: {
             opacity: 1,
             y: 0,
@@ -25,7 +23,7 @@ const SingleBrand = ({ brand }: { brand: Brand }) => {
         transition={{ duration: 1, delay: id }}
         viewport={{ once: true }}
         href={href}
-        className="animate_top mx-w-full relative mr-4 block"
+        className={`animate_top relative mr-4 block`}
         style={{ height, width }}
       >
         <Image
