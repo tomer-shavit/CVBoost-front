@@ -1,11 +1,7 @@
+"use client";
 import { Metadata } from "next";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "CVBoost | Error",
-  description: "This is Error page for CVBoost.",
-  // other metadata
-};
 
 const ErroPage = () => {
   return (
@@ -27,8 +23,8 @@ const ErroPage = () => {
           does not exist.
         </p>
 
-        <a
-          href="/"
+        <button
+          onClick={() => signOut({ callbackUrl: "/" })}
           className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
         >
           Return to Home
@@ -45,7 +41,7 @@ const ErroPage = () => {
               fill=""
             />
           </svg>
-        </a>
+        </button>
       </div>
     </section>
   );
