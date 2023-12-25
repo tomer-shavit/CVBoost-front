@@ -1,9 +1,9 @@
 import prisma from "@/prisma/client";
 import {
   WrappedUserPreview,
-  Feedback as ApiFeedback,
+  FeedbackObject as ApiFeedback,
   BoostResponse,
-  EditedLine,
+  EditedLineObject,
 } from "@/types/apiCalls";
 import {
   buildApiBoost,
@@ -54,7 +54,7 @@ export const fetchUser = async (
     }
     const boosts: BoostResponse[] = [];
     user.resumeBoosts.forEach((boost) => {
-      const editedLines: EditedLine[] = [];
+      const editedLines: EditedLineObject[] = [];
       const feedbacks: ApiFeedback[] = [];
 
       boost.feedbacks.forEach((feedback) => {

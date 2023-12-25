@@ -1,28 +1,31 @@
 import {
   WrappedBoost,
-  EditedLine,
-  Feedback as ApiFeedback,
+  EditedLineObject,
+  FeedbackObject as ApiFeedback,
   FeedbackType,
   BoostResponse,
   emptyBoostResponse,
 } from "@/types/apiCalls";
 import { Feedback, Session } from "@prisma/client";
 import prisma from "../prisma/client";
-import { decryptText } from "./decrypt";
+import { decryptText } from "./encryption";
 
 export const dbEditedLineToApiEditedLine = (
   dbEditedLine: Feedback,
   key: string,
-): EditedLine => {
+): EditedLineObject => {
   return {
     feedbackId: dbEditedLine.feedbackId,
+    feedback_type: dbEditedLine.feedbackType,
     isLiked: dbEditedLine.isLiked,
-    old_line: dbEditedLine.feedbackTextReference
-      ? decryptText(dbEditedLine.feedbackTextReference, key)
-      : "Fail",
-    new_line: dbEditedLine.feedbackText
-      ? decryptText(dbEditedLine.feedbackText, key)
-      : "no text",
+    data: {
+      old_line: dbEditedLine.feedbackTextReference
+        ? decryptText(dbEditedLine.feedbackTextReference, key)
+        : "Fail",
+      new_line: dbEditedLine.feedbackText
+        ? decryptText(dbEditedLine.feedbackText, key)
+        : "no text",
+    },
   };
 };
 
@@ -32,12 +35,14 @@ export const dbFeedbackToApiFeedback = (
 ): ApiFeedback => {
   return {
     feedbackId: dbFeedback.feedbackId,
-    feedbackType: dbFeedback.feedbackType,
+    feedback_type: dbFeedback.feedbackType,
     isLiked: dbFeedback.isLiked,
-    feedback: dbFeedback.feedbackText
-      ? decryptText(dbFeedback.feedbackText, key)
-      : "",
-    score: dbFeedback.score ? dbFeedback.score : 0,
+    data: {
+      feedback: dbFeedback.feedbackText
+        ? decryptText(dbFeedback.feedbackText, key)
+        : "",
+      score: dbFeedback.score ? dbFeedback.score : 0,
+    },
   };
 };
 
@@ -48,14 +53,13 @@ export const buildApiBoost = (
   boostId: number,
   createdAt: Date,
   feedbacks: ApiFeedback[],
-  editedLines: EditedLine[],
+  editedLines: EditedLineObject[],
 ): BoostResponse => {
   const boost = emptyBoostResponse;
-  boost.boost_id = boostId.toString();
+  boost.boostId = boostId;
   boost.edited_lines = editedLines;
-  boost.created_at = createdAt;
   feedbacks.forEach((feedback) => {
-    switch (feedback.feedbackType) {
+    switch (feedback.feedback_type) {
       case FeedbackType.CLARITY:
         boost.clarity = feedback;
         break;
@@ -98,7 +102,7 @@ export const fetchBoost = async (
     if (boost.userId !== userId) {
       return { error: "Not authorized" };
     }
-    const editedLines: EditedLine[] = [];
+    const editedLines: EditedLineObject[] = [];
     const feedbacks: ApiFeedback[] = [];
 
     boost.feedbacks.forEach((feedback) => {

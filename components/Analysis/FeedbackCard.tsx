@@ -19,17 +19,19 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
       </h5>
       <SubCard>
         <AnalysisSubTitle title="Clarity"></AnalysisSubTitle>
-        <AnalysisParagraph text={data.clarity.feedback}></AnalysisParagraph>
+        <AnalysisParagraph
+          text={data.clarity.data.feedback}
+        ></AnalysisParagraph>
         <div className="flex w-full flex-row items-center justify-center">
           <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
             <div
               className="h-full rounded-full bg-blue-400/80 text-center text-xs text-white"
-              style={{ width: data.clarity.score + "%" }}
+              style={{ width: data.clarity.data.score + "%" }}
             ></div>
           </div>
           <Like
             className="pb-2 pl-3"
-            boostId={data.boost_id}
+            boostId={data.boostId}
             feedbackId={data.clarity.feedbackId}
             isLiked={data.clarity.isLiked}
           />
@@ -38,17 +40,19 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
 
       <SubCard>
         <AnalysisSubTitle title="Relevance"></AnalysisSubTitle>
-        <AnalysisParagraph text={data.relevance.feedback}></AnalysisParagraph>
+        <AnalysisParagraph
+          text={data.relevance.data.feedback}
+        ></AnalysisParagraph>
         <div className="flex w-full flex-row items-center justify-center">
           <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
             <div
               className="h-full rounded-full bg-green-400/80 text-center text-xs text-white"
-              style={{ width: data.relevance.score + "%" }}
+              style={{ width: data.relevance.data.score + "%" }}
             ></div>
           </div>
           <Like
             className="pb-2 pl-3"
-            boostId={data.boost_id}
+            boostId={data.boostId}
             feedbackId={data.relevance.feedbackId}
             isLiked={data.relevance.isLiked}
           />
@@ -57,18 +61,18 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
       <SubCard>
         <AnalysisSubTitle title="Achievements"></AnalysisSubTitle>
         <AnalysisParagraph
-          text={data.achievements.feedback}
+          text={data.achievements.data.feedback}
         ></AnalysisParagraph>
         <div className="flex w-full flex-row items-center justify-center">
           <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
             <div
               className="h-full rounded-full bg-yellow-400/80 text-center text-xs text-white"
-              style={{ width: data.achievements.score + "%" }}
+              style={{ width: data.achievements.data.score + "%" }}
             ></div>
           </div>
           <Like
             className="pb-2 pl-3"
-            boostId={data.boost_id}
+            boostId={data.boostId}
             feedbackId={data.achievements.feedbackId}
             isLiked={data.achievements.isLiked}
           />
@@ -76,17 +80,19 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
       </SubCard>
       <SubCard last>
         <AnalysisSubTitle title="Keywords"></AnalysisSubTitle>
-        <AnalysisParagraph text={data.keywords.feedback}></AnalysisParagraph>
+        <AnalysisParagraph
+          text={data.keywords.data.feedback}
+        ></AnalysisParagraph>
         <div className="flex w-full flex-row items-center justify-center">
           <div className="mb-2 h-2 w-full rounded-full bg-slate-300 dark:bg-gray-500">
             <div
               className="h-full rounded-full bg-fuchsia-400/80 text-center text-xs text-white"
-              style={{ width: data.keywords.score + "%" }}
+              style={{ width: data.keywords.data.score + "%" }}
             ></div>
           </div>
           <Like
             className="pb-2 pl-3"
-            boostId={data.boost_id}
+            boostId={data.boostId}
             feedbackId={data.keywords.feedbackId}
             isLiked={data.keywords.isLiked}
           />

@@ -6,31 +6,41 @@ export enum FeedbackType {
   KEYWORDS = 5,
   SUMMARY = 6,
 }
-
+export enum BoostVersion {
+  V1 = 1,
+}
 export type EditedLine = {
-  feedbackId: number;
-  isLiked: boolean;
   old_line: string;
   new_line: string;
 };
+export type EditedLineObject = {
+  feedbackId: number;
+  isLiked: boolean;
+  feedback_type: FeedbackType;
+  data: EditedLine;
+};
 
 export type Feedback = {
-  feedbackId: number;
-  feedbackType: FeedbackType;
-  isLiked: boolean;
   feedback: string;
   score: number;
 };
 
+export type FeedbackObject = {
+  feedbackId: number;
+  isLiked: boolean;
+  feedback_type: FeedbackType;
+  data: Feedback;
+};
+
 export type BoostResponse = {
-  boost_id: string;
-  created_at: Date;
-  edited_lines: EditedLine[];
-  clarity: Feedback;
-  relevance: Feedback;
-  achievements: Feedback;
-  keywords: Feedback;
-  summary: Feedback;
+  boostId: number;
+  resume_text: string;
+  clarity: FeedbackObject;
+  relevance: FeedbackObject;
+  achievements: FeedbackObject;
+  keywords: FeedbackObject;
+  summary: FeedbackObject;
+  edited_lines: EditedLineObject[];
 };
 
 export type WrappedUserPreview = {
@@ -60,42 +70,52 @@ export type WrappedBoost = {
 };
 
 export const emptyBoostResponse: BoostResponse = {
-  boost_id: "",
+  boostId: 0,
   edited_lines: [],
-  created_at: new Date(),
   clarity: {
     feedbackId: 0,
+    feedback_type: FeedbackType.CLARITY,
     isLiked: false,
-    feedbackType: FeedbackType.CLARITY,
-    feedback: "",
-    score: 0,
+    data: {
+      feedback: "",
+      score: 0,
+    },
   },
   relevance: {
     feedbackId: 0,
+    feedback_type: FeedbackType.RELEVANCE,
     isLiked: false,
-    feedback: "",
-    feedbackType: FeedbackType.RELEVANCE,
-    score: 0,
+    data: {
+      feedback: "",
+      score: 0,
+    },
   },
   achievements: {
     feedbackId: 0,
+    feedback_type: FeedbackType.ACHIEVEMENTS,
     isLiked: false,
-    feedback: "",
-    feedbackType: FeedbackType.ACHIEVEMENTS,
-    score: 0,
+    data: {
+      feedback: "",
+      score: 0,
+    },
   },
   keywords: {
     feedbackId: 0,
+    feedback_type: FeedbackType.KEYWORDS,
     isLiked: false,
-    feedback: "",
-    feedbackType: FeedbackType.KEYWORDS,
-    score: 0,
+    data: {
+      feedback: "",
+      score: 0,
+    },
   },
   summary: {
     feedbackId: 0,
+    feedback_type: FeedbackType.SUMMARY,
     isLiked: false,
-    feedback: "",
-    feedbackType: FeedbackType.SUMMARY,
-    score: 0,
+    data: {
+      feedback: "",
+      score: 0,
+    },
   },
+  resume_text: "",
 };

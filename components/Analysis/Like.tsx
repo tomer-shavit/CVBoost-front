@@ -6,7 +6,7 @@ import { setFeedbackLiked } from "@/actions/feedbackActions";
 import { useOptimistic } from "@/hooks/useOptimistic";
 
 export const Like: React.FC<{
-  boostId: string;
+  boostId: number;
   feedbackId: number;
   isLiked: boolean;
   className?: string;
@@ -21,7 +21,7 @@ export const Like: React.FC<{
       className={`noSelect cursor-pointer ${className}`}
       onClick={async () => {
         setOptimisticLike(!optimisticLike);
-        await setFeedbackLiked(Number(boostId), feedbackId, !isLiked);
+        await setFeedbackLiked(boostId, feedbackId, !isLiked);
       }}
     >
       {optimisticLike ? (

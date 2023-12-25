@@ -8,10 +8,10 @@ export const Score: React.FC<{ boost: BoostResponse }> = ({ boost }) => {
 
   useEffect(() => {
     const totalScore =
-      (boost.clarity.score +
-        boost.relevance.score +
-        boost.achievements.score +
-        boost.keywords.score) /
+      (boost.clarity.data.score +
+        boost.relevance.data.score +
+        boost.achievements.data.score +
+        boost.keywords.data.score) /
       FEEDBACKS_AMOUNT;
     setScore(totalScore);
   }, [boost]);

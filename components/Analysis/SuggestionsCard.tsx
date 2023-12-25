@@ -23,10 +23,10 @@ const SuggestionsCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
             last={index === data.edited_lines.length - 1}
             key={index}
           >
-            <OldLine text={line.old_line}></OldLine>
-            <NewLine text={line.new_line}></NewLine>
+            <OldLine text={line.data.old_line}></OldLine>
+            <NewLine text={line.data.new_line}></NewLine>
             <Like
-              boostId={data.boost_id}
+              boostId={data.boostId}
               isLiked={line.isLiked}
               feedbackId={line.feedbackId}
               className="noSelect flex w-full select-none justify-end pt-2"
