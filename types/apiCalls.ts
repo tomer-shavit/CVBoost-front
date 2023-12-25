@@ -35,6 +35,7 @@ export type FeedbackObject = {
 export type BoostResponse = {
   boostId: number;
   resume_text: string;
+  created_at: Date;
   clarity: FeedbackObject;
   relevance: FeedbackObject;
   achievements: FeedbackObject;
@@ -72,6 +73,7 @@ export type WrappedBoost = {
 export const emptyBoostResponse: BoostResponse = {
   boostId: 0,
   edited_lines: [],
+  created_at: new Date(),
   clarity: {
     feedbackId: 0,
     feedback_type: FeedbackType.CLARITY,
