@@ -1,8 +1,8 @@
 "use client";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
@@ -12,10 +12,20 @@ const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdownToggler, setDropdownToggler] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
+  const navbarRef = useRef<HTMLHeadingElement>(null);
 
   const pathUrl = usePathname();
 
-  // Sticky menu
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      navbarRef.current &&
+      !navbarRef.current.contains(event.target as Node)
+    ) {
+      setNavigationOpen(false);
+    }
+  };
+
+  // Handle sticky menu logic
   const handleStickyMenu = () => {
     if (window.scrollY >= 80) {
       setStickyMenu(true);
@@ -26,7 +36,13 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleStickyMenu);
-  });
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleStickyMenu);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [navigationOpen]);
 
   return (
     <header
@@ -35,6 +51,7 @@ const Header = () => {
           ? "bg-white !py-4 shadow transition duration-100 dark:bg-black"
           : ""
       }`}
+      ref={navbarRef}
     >
       <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
         <div className="flex w-full items-center justify-between xl:w-1/4">
@@ -151,8 +168,13 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-
-          <div className="mt-7 flex items-center gap-6 xl:mt-0">
+          {navigationOpen && (
+            <div className="mt-7 flex items-center gap-6 xl:hidden">
+              <ThemeToggler />
+              <LoginButton />
+            </div>
+          )}
+          <div className="mt-7 hidden items-center gap-6 xl:mt-0 xl:flex">
             <ThemeToggler />
             <LoginButton />
           </div>

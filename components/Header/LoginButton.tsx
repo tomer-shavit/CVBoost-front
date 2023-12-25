@@ -8,7 +8,7 @@ const LoginButton = () => {
     <div>
       {session ? (
         <Link href="/user">
-          <p className="cursor-pointer text-regular font-medium text-waterloo hover:text-primary">
+          <p className="cursor-pointer font-medium text-strokedark hover:text-primary dark:text-zumthor">
             Hi {session?.user?.name}
           </p>
         </Link>
@@ -16,7 +16,7 @@ const LoginButton = () => {
         <div className="flex flex-row items-center justify-between">
           <Link
             href="/auth/signin"
-            className="mr-4 text-regular font-medium text-waterloo hover:text-primary"
+            className="font-mediumtext-strokedark mr-4 text-regular text-strokedark hover:text-primary dark:text-zumthor"
           >
             Login
           </Link>
