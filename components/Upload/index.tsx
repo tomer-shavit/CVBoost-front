@@ -3,14 +3,27 @@ import { motion as m } from "framer-motion";
 import Input from "./Input";
 import DropzoneWrapper from "./DropzoneWrapper";
 import SectionHeader from "../Common/SectionHeader";
+import { isEligibleForBoost } from "@/actions/boostActions";
+import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
 
 export const UploadSection: React.FC<{
   setFile: (file: File) => void;
 }> = ({ setFile }) => {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const uploadedFile = event.target.files?.[0];
     if (uploadedFile) {
-      setFile(uploadedFile);
+      const isEligible = await isEligibleForBoost(session?.user?.id);
+      if (isEligible) {
+        setFile(uploadedFile);
+      } else {
+        router.push("/checkout");
+      }
     }
   };
 

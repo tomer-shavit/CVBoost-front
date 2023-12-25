@@ -1,16 +1,27 @@
+"use client";
 import React, { ReactNode, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdUploadFile } from "react-icons/md";
 import { motion as m } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { isEligibleForBoost } from "@/actions/boostActions";
+import { useRouter } from "next/navigation";
 
 const DropzoneWrapper: React.FC<{
   children: ReactNode;
   className?: string;
   setFile: (file: File) => void;
 }> = ({ children, setFile, className }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      setFile(acceptedFiles[0]);
+    async (acceptedFiles: File[]) => {
+      const isEligible = await isEligibleForBoost(session?.user?.id);
+      if (isEligible) {
+        setFile(acceptedFiles[0]);
+      } else {
+        router.push("/checkout");
+      }
     },
     [setFile],
   );

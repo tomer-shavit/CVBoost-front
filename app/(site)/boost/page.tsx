@@ -11,7 +11,7 @@ const BoostPage = () => {
   const { data: session } = useSession({ required: true });
   const [file, setFile] = useState<File | undefined>();
   const [boostId, setBoostId] = useState<number | null>(null);
-  const { data, isLoading, error } = useFetchWithFile(
+  const { data, error } = useFetchWithFile(
     process.env.NEXT_PUBLIC_BOOST_FUNC_API as string,
     file,
     "resume",

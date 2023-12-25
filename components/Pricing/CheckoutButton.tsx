@@ -25,11 +25,9 @@ export const CheckoutButton: React.FC<{ variantId: string }> = ({
 
   const handleCheckout = () => {
     if (!session) {
-      // Redirect to sign-in and then back to this page
       signIn("credentials", { callbackUrl: "/checkout" });
     } else {
-      // Redirect to checkout link
-      router.push(checkoutLink);
+      window.open(checkoutLink, "_blank");
     }
   };
 
@@ -39,7 +37,7 @@ export const CheckoutButton: React.FC<{ variantId: string }> = ({
       className="group/btn inline-flex items-center gap-2.5 font-medium text-primary transition-all duration-300 dark:text-white dark:hover:text-primary"
       onClick={handleCheckout}
     >
-      Buy CVBoost
+      Buy Plan
       <svg
         width="14"
         height="14"

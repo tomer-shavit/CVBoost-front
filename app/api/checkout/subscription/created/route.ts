@@ -18,11 +18,9 @@ export async function POST(request: Request) {
         "UserId not found in lemon squeezy subscription_created webhook",
       );
     }
-    console.log("parsedBody", parsedBody);
     await validateUser(parsedBody);
 
     await createSubscription(parsedBody, parsedBody.meta.custom_data?.userId);
-    console.log("Subscription created in the db");
   } catch (error) {
     return NextResponse.json({ error: error.message });
   }

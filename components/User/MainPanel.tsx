@@ -21,8 +21,8 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
                 My Boosts
               </h2>
               <h5 className="text-xl font-bold ">
-                You have {user.resumeBoostsAvailable - user.resumeBoosts.length}{" "}
-                / {user.resumeBoostsAvailable} Boosts left.{" "}
+                You have {user.resumeBoostsAvailable} / {user.resumeBoostsTotal}{" "}
+                Boosts left.{" "}
               </h5>
             </div>
             {user.resumeBoosts.map((boost, index) => (

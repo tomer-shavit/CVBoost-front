@@ -17,10 +17,6 @@ export async function saveBoostResponseToDB(
         "Encryption seed not found while saving boost response to DB",
       );
     }
-    console.log("===============================");
-    console.log("boostResponse", boostResponse);
-    console.log("===============================");
-
     const resumeBoostData = {
       userId: userId,
       resumeText: encryptText(boostResponse.resume_text, secret),
@@ -89,6 +85,26 @@ export async function saveBoostResponseToDB(
     return boost;
   } catch (error) {
     console.error("Failed to save BoostResponse to DB:", error);
+    throw error;
+  }
+}
+
+export async function isEligibleForBoost(userId?: string): Promise<boolean> {
+  if (!userId) {
+    return false;
+  }
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      throw new Error(`User not found for id: ${userId}`);
+    }
+    return user.resumeBoostsAvailable > 0;
+  } catch (error) {
+    console.error("Failed to check eligibility for boost:", error);
     throw error;
   }
 }
