@@ -6,15 +6,19 @@ import {
   SLemonSqueezyRequest,
   TLemonSqueezyRequest,
 } from "./zod-lemon-squeezy";
-import { LS_API_BASE_URL } from "@/constants/payments";
+import { LS_API_BASE_URL, isProduction } from "@/constants/payments";
 
 export async function getProductVariants(
   productId: string,
 ): Promise<TLemonSqueezyRequest> {
-  const lemonSqueezyApiKey = process.env.LEMON_SQUEEZY_API_KEY;
+  const lemonSqueezyApiKey = isProduction
+    ? process.env.LEMON_SQUEEZY_LIVE_API_KEY
+    : process.env.LEMON_SQUEEZY_API_KEY;
 
   if (!lemonSqueezyApiKey)
-    throw new Error("No LEMON_SQUEEZY_API_KEY environment variable set");
+    throw new Error(
+      "No LEMON_SQUEEZY_API_KEY or LEMON_SQUEEZY_LIVE_API_KEY environment variable set",
+    );
 
   const url = `${LS_API_BASE_URL}/variants?filter[product_id]=${productId}`;
   const headers = createHeaders(lemonSqueezyApiKey);
@@ -37,10 +41,14 @@ export async function cancelSubscription(userId: string): Promise<void> {
   });
   if (!activeSubscription) return Promise.resolve();
 
-  const lemonSqueezyApiKey = process.env.LEMON_SQUEEZY_API_KEY;
+  const lemonSqueezyApiKey = isProduction
+    ? process.env.LEMON_SQUEEZY_LIVE_API_KEY
+    : process.env.LEMON_SQUEEZY_API_KEY;
 
   if (!lemonSqueezyApiKey)
-    throw new Error("No LEMON_SQUEEZY_API_KEY environment variable set");
+    throw new Error(
+      "No LEMON_SQUEEZY_API_KEY or LEMON_SQUEEZY_LIVE_API_KEY environment variable set",
+    );
 
   const url = `${LS_API_BASE_URL}/subscriptions/${activeSubscription.subscriptionId}`;
   const headers = createHeaders(lemonSqueezyApiKey);
