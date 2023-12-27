@@ -8,10 +8,12 @@ import { BoostSummary } from "./BoostSummary";
 export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
   return (
     <div className="mt-4 w-full px-4 lg:w-3/4  xl:mt-0">
-      <div className="blog-details blog-details-docs shadow-three dark:bg-gray-dark rounded-sm bg-white px-2 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]">
+      <div className="blog-details blog-details-docs shadow-three dark:bg-gray-dark rounded-sm bg-white lg:mb-5 ">
         {user.resumeBoosts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center">
-            <h2>Boost Your First Resume Now</h2>
+          <div className="flex flex-col items-center justify-center p-4">
+            <h2 className="mb-4 text-center text-3xl font-extrabold text-black dark:text-white lg:mb-6 xl:text-4xl">
+              Boost Your First Resume Now
+            </h2>
             <BoostCta />
           </div>
         ) : (
@@ -22,7 +24,7 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
               </h2>
               <h5 className="text-xl font-bold ">
                 You have {user.resumeBoostsAvailable} / {user.resumeBoostsTotal}{" "}
-                Boosts left.{" "}
+                Boosts left.
               </h5>
             </div>
             {user.resumeBoosts.map((boost, index) => (
