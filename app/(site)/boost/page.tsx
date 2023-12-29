@@ -6,9 +6,12 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { saveBoostResponseToDB } from "@/actions/boostActions";
+import usePageView from "@/hooks/usePageView";
+import { PageNames } from "@/types/monitoring/pageNames";
 
 const BoostPage = () => {
   const { data: session } = useSession({ required: true });
+  usePageView(PageNames.BOOST);
   const [file, setFile] = useState<File | undefined>();
   const [boostId, setBoostId] = useState<number | null>(null);
   const { data, error } = useFetchWithFile(

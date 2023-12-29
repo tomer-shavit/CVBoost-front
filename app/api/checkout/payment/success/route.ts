@@ -5,6 +5,8 @@ import {
 } from "@/helper/Payments/webhooks";
 import prisma from "../../../../../prisma/client";
 import { TWebhookSubscriptionInvoiceResponse } from "../../subscriptionInvoiceModel";
+import { MixpanelBack } from "@/services/mixpanelBack";
+import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
 
 export async function POST(request: Request) {
   console.log("PAYMENT SUCCESSFUL");
@@ -18,6 +20,18 @@ export async function POST(request: Request) {
       request,
       secret,
     );
+
+    if (!parsedBody.meta.custom_data?.userId) {
+      throw new Error(
+        "UserId not found in lemon squeezy subscription_updated webhook",
+      );
+    }
+    MixpanelBack.getInstance()
+      .identify(parsedBody.meta.custom_data.userId)
+      .track(SubscriptionsEvents.PAID_START, {
+        userId: parsedBody.meta.custom_data?.userId,
+        subscription: parsedBody.data,
+      });
     validateCustomDataInParsedBody(parsedBody);
 
     const [totalBoosts, boostsAvailable] =
@@ -29,11 +43,15 @@ export async function POST(request: Request) {
         ? parsedBody.meta.custom_data?.userId
         : "",
     );
-    console.log("Subscription Invoice created in the db");
     await updateUserBoosts(parsedBody, totalBoosts, boostsAvailable);
-    console.log("Boosts updated");
+    MixpanelBack.getInstance().track(SubscriptionsEvents.PAID_SUCCESS, {
+      userId: parsedBody.meta.custom_data?.userId,
+      subscription: parsedBody.data,
+    });
   } catch (error) {
-    console.log("error", error);
+    MixpanelBack.getInstance().track(SubscriptionsEvents.PAID_FAIL, {
+      error: error,
+    });
     return NextResponse.json({ error: error.message });
   }
 

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { TLemonSqueezyRequest } from "@/helper/Payments/zod-lemon-squeezy";
 import { motion as m } from "framer-motion";
 import { MAIN_PRODUCT_ID } from "@/constants/payments";
+import { InAndUpAnimation } from "../Animations/inAndUp";
 const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
   const [products, setProducts] = useState<TLemonSqueezyRequest | null>(null);
 
@@ -25,12 +26,7 @@ const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
         <div className="relative mx-auto mt-8 max-w-[1207px] px-4 md:px-8 xl:mt-12 xl:px-0">
           <DotsBackground />
           {products ? (
-            <m.div
-              initial={{ opacity: 0, y: "15%" }}
-              animate={{ opacity: 1, y: "0%" }}
-              transition={{ duration: 0.75, ease: "easeOut" }}
-              exit={{ opacity: 0, y: "15%" }}
-            >
+            <InAndUpAnimation>
               <div className="flex flex-wrap justify-center gap-7.5 lg:flex-nowrap xl:gap-12.5">
                 {products.data
                   .filter((product) => product.attributes.name !== "Default")
@@ -49,7 +45,7 @@ const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
                     />
                   ))}
               </div>
-            </m.div>
+            </InAndUpAnimation>
           ) : null}
         </div>
       </section>

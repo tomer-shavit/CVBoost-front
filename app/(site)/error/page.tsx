@@ -1,5 +1,4 @@
 "use client";
-import { Metadata } from "next";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 

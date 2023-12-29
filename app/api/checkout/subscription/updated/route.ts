@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { TWebhookSubscriptionResponse } from "../../subscriptionModel";
 import prisma from "@/prisma/client";
 import { extactSubscriptionFromRequest } from "@/helper/Payments/webhooks";
+import { MixpanelBack } from "@/services/mixpanelBack";
+import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
 
 export async function POST(request: Request) {
   console.log("------------------------");
@@ -21,6 +23,13 @@ export async function POST(request: Request) {
       );
     }
     await validateUser(parsedBody);
+    MixpanelBack.getInstance()
+      .identify(parsedBody.meta.custom_data.userId)
+      .track(SubscriptionsEvents.UPDATED_START, {
+        userId: parsedBody.meta.custom_data?.userId,
+        subscription: parsedBody.data,
+      });
+
     const doesExsist = await isSubscriptionExist(parsedBody);
 
     if (!doesExsist) {
@@ -35,7 +44,15 @@ export async function POST(request: Request) {
     if (parsedBody.data.attributes.status === "unpaid") {
       await handleUnpaidSubscription(parsedBody);
     }
+
+    MixpanelBack.getInstance().track(SubscriptionsEvents.UPDATED_SUCCESS, {
+      userId: parsedBody.meta.custom_data?.userId,
+      subscription: parsedBody.data,
+    });
   } catch (error) {
+    MixpanelBack.getInstance().track(SubscriptionsEvents.UPDATED_FAIL, {
+      error: error,
+    });
     return NextResponse.json({ error: error.message });
   }
 
@@ -94,8 +111,11 @@ const updateSubscription = async (
 const handleUnpaidSubscription = async (
   parsedBody: TWebhookSubscriptionResponse,
 ) => {
-  await prisma.user.update({
+  const user = await prisma.user.update({
     where: { id: parsedBody.meta.custom_data?.userId },
     data: { resumeBoostsAvailable: 0 },
+  });
+  MixpanelBack.getInstance().track(SubscriptionsEvents.UNPAID_SUCCESS, {
+    user: user,
   });
 };

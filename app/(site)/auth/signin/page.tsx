@@ -1,9 +1,10 @@
 "use client";
 import Signin from "@/components/Auth/Signin";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import usePageView from "@/hooks/usePageView";
+import { PageNames } from "@/types/monitoring/pageNames";
 
 const SigninPage = () => {
+  usePageView(PageNames.SIGN_IN);
   return (
     <>
       <Signin />

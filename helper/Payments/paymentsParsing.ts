@@ -38,6 +38,5 @@ export function createCheckoutLink(
   }
   url.searchParams.set("checkout[custom][variantId]", variantId);
 
-  console.log("url", url.toString());
   return url.toString();
 }
