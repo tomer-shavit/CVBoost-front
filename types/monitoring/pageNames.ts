@@ -7,4 +7,5 @@ export enum PageNames {
   USER_DASHBOARD = "User",
   CHECKOUT = "Checkout",
   CONGRATULATIONS = "Congratulations",
+  ERROR_404 = "Error404",
 }

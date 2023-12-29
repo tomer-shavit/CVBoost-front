@@ -148,15 +148,7 @@ const Header = () => {
                         className={`dropdown ${dropdownToggler ? "flex" : ""}`}
                       >
                         {menuItem.submenu.map((item, key) => (
-                          <li
-                            key={key}
-                            className="hover:text-primary"
-                            onClick={() =>
-                              MixpanelFront.getInstance()
-                                .identify(session?.user?.id as "")
-                                .track(`PageView::${item.path}`, {})
-                            }
-                          >
+                          <li key={key} className="hover:text-primary">
                             <Link href={item.path || "#"}>{item.title}</Link>
                           </li>
                         ))}
@@ -164,6 +156,11 @@ const Header = () => {
                     </>
                   ) : (
                     <Link
+                      onClick={() =>
+                        MixpanelFront.getInstance()
+                          .identify(session?.user?.id as string)
+                          .track(`PageView::${menuItem.title}`)
+                      }
                       href={`${menuItem.path}`}
                       className={
                         pathUrl === menuItem.path
