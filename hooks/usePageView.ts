@@ -9,7 +9,6 @@ const usePageView = (pageName: PageNames, data: object = {}, id?: string) => {
       mixpanel.identify(id);
     }
     mixpanel.track(`PageView::${pageName}`, data);
-    console.log(`PageView::${pageName}`);
   }, [pageName, data, id]);
 };
 
