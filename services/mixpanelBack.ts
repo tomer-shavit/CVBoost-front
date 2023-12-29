@@ -21,7 +21,7 @@ export class MixpanelBack {
     this.mixpanelInstance = Mixpanel.init(
       process.env.NEXT_PUBLIC_MIXPANEL_ID || "",
       {
-        debug: true,
+        debug: false,
         ignore_dnt: true,
       },
     );
