@@ -1,9 +1,17 @@
+"use client";
 import Pricing from "@/components/Pricing";
-import { getServerSession } from "next-auth";
+import usePageView from "@/hooks/usePageView";
+import { PageNames } from "@/types/monitoring/pageNames";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-export default async function Checkout() {
-  const session = await getServerSession();
+export default function Checkout() {
+  const { data: session } = useSession();
+  if (!session?.user?.id) {
+    redirect("/auth/signin");
+  }
+  // usePageView(PageNames.CHECKOUT, {}, session?.user?.id);
+
   if (!session) {
     redirect("/auth/signin");
   }

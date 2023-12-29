@@ -1,19 +1,16 @@
 import { MixpanelFront } from "@/services/mixpanelFront";
 import { PageNames } from "@/types/monitoring/pageNames";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
-const usePageView = (pageName: PageNames, data: object = {}) => {
-  const { data: session } = useSession();
-
+const usePageView = (pageName: PageNames, data: object = {}, id?: string) => {
   useEffect(() => {
     const mixpanel = MixpanelFront.getInstance();
-    if (session?.user?.id) {
-      mixpanel.identify(session?.user?.id);
+    if (id) {
+      mixpanel.identify(id);
     }
     mixpanel.track(`PageView::${pageName}`, data);
     console.log(`PageView::${pageName}`);
-  }, [pageName, data]);
+  }, [pageName, data, id]);
 };
 
 export default usePageView;

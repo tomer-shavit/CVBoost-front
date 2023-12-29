@@ -4,5 +4,7 @@ export enum PageNames {
   SIGN_UP = "SignUp",
   BOOST = "Boost",
   BOOST_ANALYSIS = "BoostAnalysis",
-  USER = "User",
+  USER_DASHBOARD = "User",
+  CHECKOUT = "Checkout",
+  CONGRATULATIONS = "Congratulations",
 }

@@ -38,12 +38,17 @@ const UserPage = async () => {
     );
     redirect("/error");
   }
-  serverPageView(PageNames.USER, {}, sessionData.user.id);
+  const subscription = await prisma.subscription.findFirst({
+    where: { userId: sessionData.user.id },
+  });
 
   return (
     <>
       {wrappedUser.userPreview && (
-        <UserDashboard user={wrappedUser.userPreview} />
+        <UserDashboard
+          subscription={subscription}
+          user={wrappedUser.userPreview}
+        />
       )}
     </>
   );

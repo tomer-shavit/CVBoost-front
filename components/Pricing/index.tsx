@@ -5,12 +5,11 @@ import { PricingCard } from "./PricingCard";
 import { PricingHeader } from "./PricingHeader";
 import { useEffect, useState } from "react";
 import { TLemonSqueezyRequest } from "@/helper/Payments/zod-lemon-squeezy";
-import { motion as m } from "framer-motion";
 import { MAIN_PRODUCT_ID } from "@/constants/payments";
 import { InAndUpAnimation } from "../Animations/inAndUp";
+
 const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
   const [products, setProducts] = useState<TLemonSqueezyRequest | null>(null);
-
   useEffect(() => {
     const fetchProduct = async () => {
       const products = await getProductVariants(MAIN_PRODUCT_ID);

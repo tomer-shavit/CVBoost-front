@@ -7,8 +7,11 @@ import { usePathname } from "next/navigation";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import LoginButton from "./LoginButton";
+import { MixpanelFront } from "@/services/mixpanelFront";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session } = useSession();
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [dropdownToggler, setDropdownToggler] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
@@ -145,7 +148,15 @@ const Header = () => {
                         className={`dropdown ${dropdownToggler ? "flex" : ""}`}
                       >
                         {menuItem.submenu.map((item, key) => (
-                          <li key={key} className="hover:text-primary">
+                          <li
+                            key={key}
+                            className="hover:text-primary"
+                            onClick={() =>
+                              MixpanelFront.getInstance()
+                                .identify(session?.user?.id as "")
+                                .track(`PageView::${item.path}`, {})
+                            }
+                          >
                             <Link href={item.path || "#"}>{item.title}</Link>
                           </li>
                         ))}

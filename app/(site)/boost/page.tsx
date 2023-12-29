@@ -11,7 +11,7 @@ import { PageNames } from "@/types/monitoring/pageNames";
 
 const BoostPage = () => {
   const { data: session } = useSession({ required: true });
-  usePageView(PageNames.BOOST);
+  usePageView(PageNames.BOOST, {}, session?.user?.id);
   const [file, setFile] = useState<File | undefined>();
   const [boostId, setBoostId] = useState<number | null>(null);
   const { data, error } = useFetchWithFile(

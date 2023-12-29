@@ -1,14 +1,16 @@
+"use client";
 import { UserPreview } from "@/types/apiCalls";
 import { MainPanel } from "./MainPanel";
 import SidebarLink from "./SidebarLink";
-import prisma from "@/prisma/client";
+import usePageView from "@/hooks/usePageView";
+import { PageNames } from "@/types/monitoring/pageNames";
 
-export const UserDashboard: React.FC<{ user: UserPreview }> = async ({
+export const UserDashboard: React.FC<{ user: UserPreview; subscription }> = ({
   user,
+  subscription,
 }) => {
-  const subscription = await prisma.subscription.findFirst({
-    where: { userId: user.id },
-  });
+  usePageView(PageNames.USER_DASHBOARD, {}, user?.id);
+
   return (
     <section className="w-full pb-16 pt-24 md:pb-20 md:pt-28 lg:pb-24 lg:pt-32">
       <div className="container mx-auto">

@@ -16,9 +16,11 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import usePageView from "@/hooks/usePageView";
 import { PageNames } from "@/types/monitoring/pageNames";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  usePageView(PageNames.HOME);
+  const { data: session } = useSession();
+  usePageView(PageNames.HOME, {}, session?.user?.id);
 
   return (
     <main>
