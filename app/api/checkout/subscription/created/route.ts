@@ -4,6 +4,7 @@ import { extactSubscriptionFromRequest } from "@/helper/Payments/webhooks";
 import { TWebhookSubscriptionResponse } from "../../subscriptionModel";
 import { MixpanelBack } from "@/services/mixpanelBack";
 import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
+import { MontioringErrorTypes } from "@/types/monitoring/errors";
 
 export async function POST(request: Request) {
   console.log("SUBSCRIPTION CREATED");
@@ -20,12 +21,10 @@ export async function POST(request: Request) {
         "UserId not found in lemon squeezy subscription_created webhook",
       );
     }
-    MixpanelBack.getInstance()
-      .identify(parsedBody.meta.custom_data.userId)
-      .track(SubscriptionsEvents.CREATED_START, {
-        userId: parsedBody.meta.custom_data?.userId,
-        subscription: parsedBody.data,
-      });
+    MixpanelBack.getInstance().track(SubscriptionsEvents.CREATED_START, {
+      userId: parsedBody.meta.custom_data?.userId,
+      subscription: parsedBody.data,
+    });
     await validateUser(parsedBody);
 
     await createSubscription(parsedBody, parsedBody.meta.custom_data?.userId);
@@ -35,9 +34,12 @@ export async function POST(request: Request) {
       subscription: parsedBody.data,
     });
   } catch (error) {
-    MixpanelBack.getInstance().track(SubscriptionsEvents.CREATED_FAIL, {
-      error: error,
-    });
+    MixpanelBack.getInstance().track(
+      MontioringErrorTypes.CREATE_SUBSCRIPTION_ERROR,
+      {
+        error: error,
+      },
+    );
     return NextResponse.json({ error: error.message });
   }
 

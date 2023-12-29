@@ -1,3 +1,5 @@
+import { MixpanelFront } from "@/services/mixpanelFront";
+import { MontioringErrorTypes } from "@/types/monitoring/errors";
 import { useState, useEffect } from "react";
 
 /**
@@ -13,21 +15,20 @@ export function useOptimistic<T>(
   const [state, setState] = useState<T>(initialValue);
   const [tempState, setTempState] = useState<T>(initialValue);
 
-  // Function to set temporary state optimistically
   const setOptimisticState = (newState: T): void => {
     setTempState(newState);
     try {
-      // Update the actual state with the updater function
       const updatedState = updater(state, newState);
       setState(updatedState);
     } catch (error) {
-      // Revert to the previous state in case of error
-      console.error(error);
+      MixpanelFront.getInstance().track(
+        MontioringErrorTypes.USE_OPTIMISTIC_ERROR,
+        { error: error },
+      );
       setTempState(state);
     }
   };
 
-  // Effect to synchronize tempState with the actual state
   useEffect(() => {
     setTempState(state);
   }, [state]);

@@ -83,7 +83,7 @@ export const buildApiBoost = (
 
 export const fetchBoost = async (
   boostId: number,
-  userId: string,
+  userId: string | undefined,
   key: string,
 ): Promise<WrappedBoost> => {
   if (!userId) {

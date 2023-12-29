@@ -3,6 +3,8 @@ import { encryptText, hashText } from "@/helper/encryption";
 import prisma from "../prisma/client";
 import { BoostResponse, BoostVersion, FeedbackObject } from "@/types/apiCalls";
 import { Feedback, ResumeBoost } from "@prisma/client";
+import { MixpanelBack } from "@/services/mixpanelBack";
+import { MontioringErrorTypes } from "@/types/monitoring/errors";
 
 export async function saveBoostResponseToDB(
   boostResponse: BoostResponse,
@@ -94,7 +96,12 @@ export async function saveBoostResponseToDB(
     );
     return boost;
   } catch (error) {
-    console.error("Failed to save BoostResponse to DB:", error);
+    MixpanelBack.getInstance().track(
+      MontioringErrorTypes.SAVE_BOOST_RESPONSE_TO_DB_ERROR,
+      {
+        error: error,
+      },
+    );
     throw error;
   }
 }
@@ -114,7 +121,12 @@ export async function isEligibleForBoost(userId?: string): Promise<boolean> {
     }
     return user.resumeBoostsAvailable > 0;
   } catch (error) {
-    console.error("Failed to check eligibility for boost:", error);
+    MixpanelBack.getInstance().track(
+      MontioringErrorTypes.IS_ELIGIBLE_FOR_BOOST_ERROR,
+      {
+        error: error,
+      },
+    );
     throw error;
   }
 }

@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import prisma from "../prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { AdapterUser } from "next-auth/adapters";
+import { MixpanelBack } from "@/services/mixpanelBack";
+import { MontioringErrorTypes } from "@/types/monitoring/errors";
 
 const INIT_RESUMES = 1;
 
@@ -23,7 +25,12 @@ const customCreateUser: (
       });
       return resUser;
     } catch (error) {
-      console.log(error);
+      MixpanelBack.getInstance().track(
+        MontioringErrorTypes.CREATE_CUSTOM_USER_ERROR,
+        {
+          error: error,
+        },
+      );
       return {} as AdapterUser;
     }
   }
@@ -35,7 +42,12 @@ const getUserByEmail = async (email: string) => {
     const user = await prisma.user.findUnique({ where: { email: email } });
     return user;
   } catch (error) {
-    console.log(error);
+    MixpanelBack.getInstance().track(
+      MontioringErrorTypes.GET_USER_BY_EMAIL_ERROR,
+      {
+        error: error,
+      },
+    );
     return null;
   }
 };

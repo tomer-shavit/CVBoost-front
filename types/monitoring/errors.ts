@@ -1,4 +1,16 @@
 export const enum MontioringErrorTypes {
   FETCH_BOOST_ERROR = "ERROR::FetchBoostError",
   FETCH_USER_ERROR = "ERROR::FetchUserError",
+  UPDATE_SUBSCRIPTION_ERROR = "ERROR::UpdateSubscriptionError",
+  CREATE_SUBSCRIPTION_ERROR = "ERROR::CreateSubscriptionError",
+  CANCEL_SUBSCRIPTION_ERROR = "ERROR::CancelSubscriptionError",
+  PAY_SUBSCRIPTION_ERROR = "ERROR::PaySubscriptionError",
+  SAVE_BOOST_RESPONSE_TO_DB_ERROR = "ERROR::SaveBoostResponseToDbError",
+  IS_ELIGIBLE_FOR_BOOST_ERROR = "ERROR::IsEligibleForBoostError",
+  CREATE_CUSTOM_USER_ERROR = "ERROR::CreateCustomUserError",
+  GET_USER_BY_EMAIL_ERROR = "ERROR::GetUserByEmailError",
+  DECRYPT_KEY_ERROR = "ERROR::DecryptKeyError",
+  ENCRYPT_KEY_ERROR = "ERROR::EncryptKeyError",
+  BOOST_RESUME_ERROR = "ERROR::BoostResumeError",
+  USE_OPTIMISTIC_ERROR = "ERROR::UseOptimisticError",
 }
