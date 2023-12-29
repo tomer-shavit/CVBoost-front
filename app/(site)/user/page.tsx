@@ -1,13 +1,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UserDashboard } from "@/components/User/UserDashboard";
 import { trackError } from "@/helper/Monitoring/serverError";
-import { serverPageView } from "@/helper/Monitoring/serverPageView";
 import { fetchUser } from "@/helper/fetchUser";
 import { MontioringErrorTypes } from "@/types/monitoring/errors";
-import { PageNames } from "@/types/monitoring/pageNames";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import prisma from "../../../prisma/client";
 
 export const metadata: Metadata = {
   title: "CVBoost | User",
