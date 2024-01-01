@@ -4,7 +4,7 @@ import {
   FeedbackObject as ApiFeedback,
   FeedbackType,
   BoostResponse,
-  emptyBoostResponse,
+  createEmptyBoostResponse,
 } from "@/types/apiCalls";
 import { Feedback, Session } from "@prisma/client";
 import prisma from "../prisma/client";
@@ -55,8 +55,9 @@ export const buildApiBoost = (
   feedbacks: ApiFeedback[],
   editedLines: EditedLineObject[],
 ): BoostResponse => {
-  const boost = emptyBoostResponse;
+  const boost = createEmptyBoostResponse();
   boost.boostId = boostId;
+  boost.createdAt = createdAt;
   boost.edited_lines = editedLines;
   feedbacks.forEach((feedback) => {
     switch (feedback.feedback_type) {

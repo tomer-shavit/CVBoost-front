@@ -64,7 +64,6 @@ export const fetchUser = async (
           feedbacks.push(dbFeedbackToApiFeedback(feedback, key));
         }
       });
-
       boosts.push(
         buildApiBoost(boost.boostId, boost.createdAt, feedbacks, editedLines),
       );
@@ -76,7 +75,7 @@ export const fetchUser = async (
         user.name,
         user.resumeBoostsAvailable,
         user.resumeBoostsTotal,
-        boosts,
+        boosts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
       ),
     };
   } catch (error) {

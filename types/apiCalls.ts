@@ -42,6 +42,7 @@ export type BoostResponse = {
   keywords: FeedbackObject;
   summary: FeedbackObject;
   edited_lines: EditedLineObject[];
+  createdAt: Date;
 };
 
 export type WrappedUserPreview = {
@@ -70,54 +71,57 @@ export type WrappedBoost = {
   error?: string;
 };
 
-export const emptyBoostResponse: BoostResponse = {
-  boostId: 0,
-  edited_lines: [],
-  created_at: new Date(),
-  clarity: {
-    feedbackId: 0,
-    feedback_type: FeedbackType.CLARITY,
-    isLiked: false,
-    data: {
-      feedback: "",
-      score: 0,
+export const createEmptyBoostResponse = (): BoostResponse => {
+  return {
+    boostId: 0,
+    edited_lines: [],
+    created_at: new Date(),
+    clarity: {
+      feedbackId: 0,
+      feedback_type: FeedbackType.CLARITY,
+      isLiked: false,
+      data: {
+        feedback: "",
+        score: 0,
+      },
     },
-  },
-  relevance: {
-    feedbackId: 0,
-    feedback_type: FeedbackType.RELEVANCE,
-    isLiked: false,
-    data: {
-      feedback: "",
-      score: 0,
+    relevance: {
+      feedbackId: 0,
+      feedback_type: FeedbackType.RELEVANCE,
+      isLiked: false,
+      data: {
+        feedback: "",
+        score: 0,
+      },
     },
-  },
-  achievements: {
-    feedbackId: 0,
-    feedback_type: FeedbackType.ACHIEVEMENTS,
-    isLiked: false,
-    data: {
-      feedback: "",
-      score: 0,
+    achievements: {
+      feedbackId: 0,
+      feedback_type: FeedbackType.ACHIEVEMENTS,
+      isLiked: false,
+      data: {
+        feedback: "",
+        score: 0,
+      },
     },
-  },
-  keywords: {
-    feedbackId: 0,
-    feedback_type: FeedbackType.KEYWORDS,
-    isLiked: false,
-    data: {
-      feedback: "",
-      score: 0,
+    keywords: {
+      feedbackId: 0,
+      feedback_type: FeedbackType.KEYWORDS,
+      isLiked: false,
+      data: {
+        feedback: "",
+        score: 0,
+      },
     },
-  },
-  summary: {
-    feedbackId: 0,
-    feedback_type: FeedbackType.SUMMARY,
-    isLiked: false,
-    data: {
-      feedback: "",
-      score: 0,
+    summary: {
+      feedbackId: 0,
+      feedback_type: FeedbackType.SUMMARY,
+      isLiked: false,
+      data: {
+        feedback: "",
+        score: 0,
+      },
     },
-  },
-  resume_text: "",
+    resume_text: "",
+    createdAt: new Date(),
+  };
 };
