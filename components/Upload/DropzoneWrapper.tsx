@@ -46,9 +46,9 @@ const DropzoneWrapper: React.FC<{
         <input {...getInputProps()} />
         {children}
         {isDragActive && (
-          <m.div className="absolute inset-0 m-8 flex items-center justify-center rounded-md border-8 border-dashed border-gray-200 bg-black bg-opacity-50">
+          <m.div className="absolute inset-0 m-8 flex items-center justify-center rounded-md border-dashed border-gray-400 bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-20">
             <div className="text-center">
-              <MdUploadFile className="z-20 text-9xl text-primary"></MdUploadFile>
+              <MdUploadFile className="text-9xl  text-green-500"></MdUploadFile>
             </div>
           </m.div>
         )}
