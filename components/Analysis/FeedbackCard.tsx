@@ -17,7 +17,7 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
         </span>
         Analysis:
       </h5>
-      <SubCard>
+      <SubCard isFull={data.clarity.isFull}>
         <AnalysisSubTitle title="Clarity"></AnalysisSubTitle>
         <AnalysisParagraph
           text={data.clarity.data.feedback}
@@ -38,7 +38,7 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
         </div>
       </SubCard>
 
-      <SubCard>
+      <SubCard isFull={data.relevance.isFull}>
         <AnalysisSubTitle title="Relevance"></AnalysisSubTitle>
         <AnalysisParagraph
           text={data.relevance.data.feedback}
@@ -58,7 +58,7 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
           />
         </div>
       </SubCard>
-      <SubCard>
+      <SubCard isFull={data.achievements.isFull}>
         <AnalysisSubTitle title="Achievements"></AnalysisSubTitle>
         <AnalysisParagraph
           text={data.achievements.data.feedback}
@@ -78,7 +78,7 @@ const FeedbackCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
           />
         </div>
       </SubCard>
-      <SubCard last>
+      <SubCard last isFull={data.keywords.isFull}>
         <AnalysisSubTitle title="Keywords"></AnalysisSubTitle>
         <AnalysisParagraph
           text={data.keywords.data.feedback}

@@ -13,18 +13,21 @@ import { decryptText } from "./encryption";
 export const dbEditedLineToApiEditedLine = (
   dbEditedLine: Feedback,
   key: string,
+  isFull: boolean,
 ): EditedLineObject => {
   return {
     feedbackId: dbEditedLine.feedbackId,
     feedback_type: dbEditedLine.feedbackType,
+    isFull: isFull,
     isLiked: dbEditedLine.isLiked,
     data: {
       old_line: dbEditedLine.feedbackTextReference
         ? decryptText(dbEditedLine.feedbackTextReference, key)
         : "Fail",
-      new_line: dbEditedLine.feedbackText
-        ? decryptText(dbEditedLine.feedbackText, key)
-        : "no text",
+      new_line:
+        dbEditedLine.feedbackText && isFull
+          ? decryptText(dbEditedLine.feedbackText, key)
+          : "Upgrade your plan to see the improved version.",
     },
   };
 };
@@ -32,19 +35,39 @@ export const dbEditedLineToApiEditedLine = (
 export const dbFeedbackToApiFeedback = (
   dbFeedback: Feedback,
   key: string,
+  isFull: boolean,
 ): ApiFeedback => {
+  console.log(dbFeedback.feedbackType === FeedbackType.SUMMARY);
   return {
     feedbackId: dbFeedback.feedbackId,
     feedback_type: dbFeedback.feedbackType,
+    isFull: isFull || dbFeedback.feedbackType === FeedbackType.SUMMARY,
     isLiked: dbFeedback.isLiked,
     data: {
-      feedback: dbFeedback.feedbackText
-        ? decryptText(dbFeedback.feedbackText, key)
-        : "",
+      feedback:
+        isFull || dbFeedback.feedbackType === FeedbackType.SUMMARY
+          ? decryptText(dbFeedback.feedbackText, key)
+          : cutStringAtHowever(decryptText(dbFeedback.feedbackText, key)),
       score: dbFeedback.score ? dbFeedback.score : 0,
     },
   };
 };
+
+function cutStringAtHowever(text: string): string {
+  const words = text.split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    if (
+      words[i].toLowerCase() === "however" ||
+      words[i].toLowerCase() === "however,"
+    ) {
+      words[i] = words[i].replace(",", "");
+      return words.slice(0, i + 1).join(" ") + "...";
+    }
+  }
+
+  return words.slice(0, 18).join(" ") + "...";
+}
 
 export const isEditedLines = (feedbackType: number): boolean =>
   feedbackType === FeedbackType.REPHRASE;
@@ -97,6 +120,12 @@ export const fetchBoost = async (
       include: { feedbacks: true },
     });
 
+    const activeSubscriptions = await prisma.subscription.findMany({
+      where: { userId: userId, status: "active" },
+    });
+
+    const isFull = activeSubscriptions.length > 0;
+
     if (!boost) {
       return { error: "No boost found" };
     }
@@ -108,9 +137,21 @@ export const fetchBoost = async (
 
     boost.feedbacks.forEach((feedback) => {
       if (isEditedLines(feedback.feedbackType)) {
-        editedLines.push(dbEditedLineToApiEditedLine(feedback, key));
+        editedLines.push(
+          dbEditedLineToApiEditedLine(
+            feedback,
+            key,
+            isFull || editedLines.length === 0,
+          ),
+        );
       } else {
-        feedbacks.push(dbFeedbackToApiFeedback(feedback, key));
+        feedbacks.push(
+          dbFeedbackToApiFeedback(
+            feedback,
+            key,
+            isFull || feedbacks.length === 0,
+          ),
+        );
       }
     });
     return {

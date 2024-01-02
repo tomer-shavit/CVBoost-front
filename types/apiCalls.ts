@@ -15,6 +15,7 @@ export type EditedLine = {
 };
 export type EditedLineObject = {
   feedbackId: number;
+  isFull: boolean;
   isLiked: boolean;
   feedback_type: FeedbackType;
   data: EditedLine;
@@ -27,6 +28,7 @@ export type Feedback = {
 
 export type FeedbackObject = {
   feedbackId: number;
+  isFull: boolean;
   isLiked: boolean;
   feedback_type: FeedbackType;
   data: Feedback;
@@ -78,6 +80,7 @@ export const createEmptyBoostResponse = (): BoostResponse => {
     created_at: new Date(),
     clarity: {
       feedbackId: 0,
+      isFull: false,
       feedback_type: FeedbackType.CLARITY,
       isLiked: false,
       data: {
@@ -87,6 +90,7 @@ export const createEmptyBoostResponse = (): BoostResponse => {
     },
     relevance: {
       feedbackId: 0,
+      isFull: false,
       feedback_type: FeedbackType.RELEVANCE,
       isLiked: false,
       data: {
@@ -96,6 +100,7 @@ export const createEmptyBoostResponse = (): BoostResponse => {
     },
     achievements: {
       feedbackId: 0,
+      isFull: false,
       feedback_type: FeedbackType.ACHIEVEMENTS,
       isLiked: false,
       data: {
@@ -105,6 +110,7 @@ export const createEmptyBoostResponse = (): BoostResponse => {
     },
     keywords: {
       feedbackId: 0,
+      isFull: false,
       feedback_type: FeedbackType.KEYWORDS,
       isLiked: false,
       data: {
@@ -114,6 +120,7 @@ export const createEmptyBoostResponse = (): BoostResponse => {
     },
     summary: {
       feedbackId: 0,
+      isFull: false,
       feedback_type: FeedbackType.SUMMARY,
       isLiked: false,
       data: {

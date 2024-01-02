@@ -20,6 +20,7 @@ const SuggestionsCard: React.FC<{ data: BoostResponse }> = ({ data }) => {
         return (
           <SubCard
             className="pb-3"
+            isFull={line.isFull}
             last={index === data.edited_lines.length - 1}
             key={index}
           >
