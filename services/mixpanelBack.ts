@@ -1,3 +1,5 @@
+import { isProduction } from "@/constants/payments";
+
 var Mixpanel = require("mixpanel");
 
 export class MixpanelBack {
@@ -28,7 +30,9 @@ export class MixpanelBack {
   }
 
   public track(eventName: string, data: object = {}) {
-    this.mixpanelInstance.track(eventName, data);
+    if (isProduction) {
+      this.mixpanelInstance.track(eventName, data);
+    }
     return this;
   }
 }

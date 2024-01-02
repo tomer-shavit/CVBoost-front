@@ -1,4 +1,5 @@
 "use client";
+import { isProduction } from "@/constants/payments";
 import mixpanel from "mixpanel-browser";
 
 export class MixpanelFront {
@@ -25,12 +26,16 @@ export class MixpanelFront {
   }
 
   public track(eventName: string, data: object = {}) {
-    mixpanel.track(eventName, data);
+    if (isProduction) {
+      mixpanel.track(eventName, data);
+    }
     return this;
   }
 
   public identify(userId: string) {
-    mixpanel.identify(userId);
+    if (isProduction) {
+      mixpanel.identify(userId);
+    }
     return this;
   }
 }
