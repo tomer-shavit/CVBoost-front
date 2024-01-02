@@ -47,8 +47,14 @@ export const fetchUser = async (
             feedbacks: true,
           },
         },
+        subscriptions: {
+          where: {
+            status: "active",
+          },
+        },
       },
     });
+
     if (!user) {
       return { error: `No user was found with the Id: ${userId}` };
     }
@@ -59,9 +65,21 @@ export const fetchUser = async (
 
       boost.feedbacks.forEach((feedback) => {
         if (isEditedLines(feedback.feedbackType)) {
-          editedLines.push(dbEditedLineToApiEditedLine(feedback, key));
+          editedLines.push(
+            dbEditedLineToApiEditedLine(
+              feedback,
+              key,
+              user.subscriptions.length > 0,
+            ),
+          );
         } else {
-          feedbacks.push(dbFeedbackToApiFeedback(feedback, key));
+          feedbacks.push(
+            dbFeedbackToApiFeedback(
+              feedback,
+              key,
+              user.subscriptions.length > 0,
+            ),
+          );
         }
       });
       boosts.push(
