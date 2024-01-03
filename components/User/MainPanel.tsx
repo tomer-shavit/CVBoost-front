@@ -31,6 +31,7 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
               <SubCard
                 className="p-6"
                 key={index}
+                isFull
                 last={index === user.resumeBoosts.length - 1}
               >
                 <Score boost={boost} />
@@ -43,7 +44,7 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
                     </button>
                   </Link>
                   <p className="self-end">
-                    {boost.created_at?.toLocaleDateString("en-US", {
+                    {boost.createdAt?.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                     })}

@@ -37,7 +37,6 @@ export const dbFeedbackToApiFeedback = (
   key: string,
   isFull: boolean,
 ): ApiFeedback => {
-  console.log(dbFeedback.feedbackType === FeedbackType.SUMMARY);
   return {
     feedbackId: dbFeedback.feedbackId,
     feedback_type: dbFeedback.feedbackType,
