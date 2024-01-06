@@ -19,6 +19,7 @@ import crypto from "crypto";
 export const validateDigestAndxSignature = (
   xSignature: string | null,
   digest: string,
+  secret: string,
 ) => {
   if (!xSignature) {
     throw new Error("X-Signature header is missing in the webhook request.");
@@ -31,7 +32,7 @@ export const validateDigestAndxSignature = (
     )
   ) {
     throw new Error(
-      `Invalid signature. Expected digest: ${digest}.\nReceived X-Signature: ${xSignature}`,
+      `Invalid signature. Expected digest: ${digest}.\nReceived X-Signature: ${xSignature}\n Secret is ${secret}`,
     );
   }
 };
@@ -48,7 +49,7 @@ const extractBodyfFromRequest = async (request: Request, secret: string) => {
   hmac.update(rawBody);
   const digest = hmac.digest("hex");
 
-  validateDigestAndxSignature(xSignature, digest);
+  validateDigestAndxSignature(xSignature, digest, secret);
 
   return JSON.parse(rawBody);
 };
