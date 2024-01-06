@@ -20,17 +20,21 @@ export const validateDigestAndxSignature = (
   xSignature: string | null,
   digest: string,
 ) => {
+  if (!xSignature) {
+    throw new Error("X-Signature header is missing in the webhook request.");
+  }
+
   if (
-    !xSignature ||
     !crypto.timingSafeEqual(
       Buffer.from(digest, "hex"),
       Buffer.from(xSignature, "hex"),
     )
   ) {
-    throw new Error("Invalid signature while dycripting body.");
+    throw new Error(
+      `Invalid signature. Expected digest: ${digest}.\nReceived X-Signature: ${xSignature}`,
+    );
   }
 };
-
 const extractBodyfFromRequest = async (request: Request, secret: string) => {
   const rawBody = await request.text();
   if (!rawBody) {
