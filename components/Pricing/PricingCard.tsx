@@ -33,12 +33,9 @@ export const PricingCard: React.FC<{
       <div className="mb-8 flex flex-row items-end">
         <h3 className="relative w-fit text-5xl font-bold  text-black dark:text-white ">
           ${integer}
-          <span className="ri absolute right-[-23px] top-[2px] text-base">
-            {decimal}
-          </span>
         </h3>
-        <span className="dark:text-manate ml-6 text-regular text-waterloo md:ml-5">
-          /month
+        <span className="dark:text-manate ml-1 text-regular text-waterloo md:ml-1">
+          / month
         </span>
       </div>
 

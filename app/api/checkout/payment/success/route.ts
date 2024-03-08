@@ -10,7 +10,7 @@ import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
 import { MontioringErrorTypes } from "@/types/monitoring/errors";
 
 export async function POST(request: Request) {
-  console.log("PAYMENT SUCCESSFUL");
+  console.log("PAYMENT SUCCESSFUL Start");
   const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
   try {
     if (!secret) {

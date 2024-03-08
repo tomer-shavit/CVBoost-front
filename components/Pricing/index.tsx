@@ -39,7 +39,7 @@ const Pricing: React.FC<{ hasHeader?: boolean }> = ({ hasHeader = true }) => {
                           ? product.attributes.description
                           : ""
                       }
-                      price={product.attributes.price}
+                      price={parseInt(product.attributes.price)}
                       isPopular={product.attributes.name === "Standard"}
                     />
                   ))}

@@ -34,7 +34,7 @@ const SAttributes = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  price: z.number(),
+  price: z.string(),
   is_subscription: z.boolean(),
   interval: z.string().nullable(),
   interval_count: z.number().nullable(),
