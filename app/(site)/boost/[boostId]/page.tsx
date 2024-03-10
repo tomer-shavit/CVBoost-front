@@ -3,7 +3,7 @@ import Analysis from "@/components/Analysis";
 import { trackError } from "@/helper/Monitoring/serverError";
 import { serverPageView } from "@/helper/Monitoring/serverPageView";
 import { fetchBoost } from "@/helper/fetchBoosts";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 import { PageNames } from "@/types/monitoring/pageNames";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -26,7 +26,7 @@ const BoostIdPage = async ({ params }) => {
 
   if (wrappedBoost.error) {
     trackError(
-      MontioringErrorTypes.FETCH_BOOST_ERROR,
+      MonitoringErrorTypes.FETCH_BOOST_ERROR,
       {
         error: wrappedBoost.error,
       },

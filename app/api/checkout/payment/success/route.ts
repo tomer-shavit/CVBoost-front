@@ -7,7 +7,7 @@ import prisma from "../../../../../prisma/client";
 import { TWebhookSubscriptionInvoiceResponse } from "../../subscriptionInvoiceModel";
 import { MixpanelBack } from "@/services/mixpanelBack";
 import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 export async function POST(request: Request) {
   console.log("PAYMENT SUCCESSFUL Start");
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     MixpanelBack.getInstance().track(
-      MontioringErrorTypes.PAY_SUBSCRIPTION_ERROR,
+      MonitoringErrorTypes.PAY_SUBSCRIPTION_ERROR,
       {
         error: error,
       },

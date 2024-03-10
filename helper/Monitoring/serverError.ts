@@ -1,8 +1,8 @@
 import { MixpanelBack } from "@/services/mixpanelBack";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 export const trackError = (
-  errorType: MontioringErrorTypes,
+  errorType: MonitoringErrorTypes,
   data: object = {},
   id?: string,
 ) => {

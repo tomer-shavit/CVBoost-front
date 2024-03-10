@@ -4,7 +4,7 @@ import { extactSubscriptionFromRequest } from "@/helper/Payments/webhooks";
 import { TWebhookSubscriptionResponse } from "../../subscriptionModel";
 import { MixpanelBack } from "@/services/mixpanelBack";
 import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 export async function POST(request: Request) {
   console.log("SUBSCRIPTION CREATED");
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     MixpanelBack.getInstance().track(
-      MontioringErrorTypes.CREATE_SUBSCRIPTION_ERROR,
+      MonitoringErrorTypes.CREATE_SUBSCRIPTION_ERROR,
       {
         error: error,
       },

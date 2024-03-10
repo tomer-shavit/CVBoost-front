@@ -4,7 +4,7 @@ import prisma from "@/prisma/client";
 import { extactSubscriptionFromRequest } from "@/helper/Payments/webhooks";
 import { MixpanelBack } from "@/services/mixpanelBack";
 import { SubscriptionsEvents } from "@/types/monitoring/subscriptions";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 export async function POST(request: Request) {
   console.log("------------------------");
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     MixpanelBack.getInstance().track(
-      MontioringErrorTypes.UPDATE_SUBSCRIPTION_ERROR,
+      MonitoringErrorTypes.UPDATE_SUBSCRIPTION_ERROR,
       {
         error: error,
       },

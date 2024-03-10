@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BoostResponse } from "../types/apiCalls";
 import { MixpanelFront } from "@/services/mixpanelFront";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 type ApiError = {
   message: string;
@@ -46,7 +46,7 @@ const useApi: UseApiHook = (url, file, fileName, userId) => {
           setError({ message: "An unknown error occurred" });
         }
         MixpanelFront.getInstance().track(
-          MontioringErrorTypes.BOOST_RESUME_ERROR,
+          MonitoringErrorTypes.BOOST_RESUME_ERROR,
           { error: error },
         );
       } finally {
