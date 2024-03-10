@@ -1,4 +1,4 @@
-export const enum MontioringErrorTypes {
+export const enum MonitoringErrorTypes {
   FETCH_BOOST_ERROR = "ERROR::FetchBoostError",
   FETCH_USER_ERROR = "ERROR::FetchUserError",
   UPDATE_SUBSCRIPTION_ERROR = "ERROR::UpdateSubscriptionError",

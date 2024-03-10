@@ -1,5 +1,5 @@
 import { MixpanelBack } from "@/services/mixpanelBack";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 import * as crypto from "crypto";
 
 export function decryptText(
@@ -17,7 +17,7 @@ export function decryptText(
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
   } catch (e) {
-    MixpanelBack.getInstance().track(MontioringErrorTypes.DECRYPT_KEY_ERROR, {
+    MixpanelBack.getInstance().track(MonitoringErrorTypes.DECRYPT_KEY_ERROR, {
       error: e,
     });
     return "FAIL";
@@ -35,7 +35,7 @@ export function encryptText(text: string, secretKey: string): string {
     const encryptedData = Buffer.concat([iv, encrypted]); // Prepend the IV to the encrypted data
     return encryptedData.toString("base64");
   } catch (e) {
-    MixpanelBack.getInstance().track(MontioringErrorTypes.ENCRYPT_KEY_ERROR, {
+    MixpanelBack.getInstance().track(MonitoringErrorTypes.ENCRYPT_KEY_ERROR, {
       error: e,
     });
     return "FAIL";

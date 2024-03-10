@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UserDashboard } from "@/components/User/UserDashboard";
 import { trackError } from "@/helper/Monitoring/serverError";
 import { fetchUser } from "@/helper/fetchUser";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -29,7 +29,7 @@ const UserPage = async () => {
 
   if (wrappedUser.error) {
     trackError(
-      MontioringErrorTypes.FETCH_USER_ERROR,
+      MonitoringErrorTypes.FETCH_USER_ERROR,
       {
         error: wrappedUser.error,
       },

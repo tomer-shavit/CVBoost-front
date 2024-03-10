@@ -8,7 +8,7 @@ import {
 } from "./zod-lemon-squeezy";
 import { LS_API_BASE_URL, isProduction } from "@/constants/payments";
 import { trackError } from "../Monitoring/serverError";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 
 export async function getProductVariants(
   productId: string,
@@ -67,7 +67,7 @@ export async function cancelSubscription(userId: string): Promise<void> {
       throw new Error(`Subscription of user ${userId}, is not cancelled.`);
     }
   } catch (error) {
-    trackError(MontioringErrorTypes.CANCEL_SUBSCRIPTION_ERROR, {
+    trackError(MonitoringErrorTypes.CANCEL_SUBSCRIPTION_ERROR, {
       error: error,
     });
   }

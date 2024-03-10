@@ -1,5 +1,5 @@
 import { MixpanelFront } from "@/services/mixpanelFront";
-import { MontioringErrorTypes } from "@/types/monitoring/errors";
+import { MonitoringErrorTypes } from "@/types/monitoring/errors";
 import { useState, useEffect } from "react";
 
 /**
@@ -22,7 +22,7 @@ export function useOptimistic<T>(
       setState(updatedState);
     } catch (error) {
       MixpanelFront.getInstance().track(
-        MontioringErrorTypes.USE_OPTIMISTIC_ERROR,
+        MonitoringErrorTypes.USE_OPTIMISTIC_ERROR,
         { error: error },
       );
       setTempState(state);
