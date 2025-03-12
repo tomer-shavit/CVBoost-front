@@ -1,50 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-// List of bot user agent patterns to block
-const BOT_UA_PATTERNS = [
-  /bot/i,
-  /spider/i,
-  /crawl/i,
-  /scrape/i,
-  /headless/i,
-  /selenium/i,
-  /puppeteer/i,
-  /chrome-lighthouse/i,
-  /slurp/i,
-  /facebook/i,
-  /pingdom/i,
-  /phantom/i,
-  /ahrefsbot/i,
-  /semrushbot/i,
-  /bingbot/i,
-  /baiduspider/i,
-  /yandexbot/i,
-];
-
-// List of allowed bot user agents (e.g., Google, Bing)
-const ALLOWED_BOTS = [/googlebot/i, /bingbot/i, /yandexbot/i];
-
-// Function to check if a user agent is a bot
-function isBot(userAgent: string | null): boolean {
-  if (!userAgent) return false;
-
-  // Check if it's an allowed bot
-  for (const pattern of ALLOWED_BOTS) {
-    if (pattern.test(userAgent)) {
-      return false;
-    }
-  }
-
-  // Check if it's a bot to block
-  for (const pattern of BOT_UA_PATTERNS) {
-    if (pattern.test(userAgent)) {
-      return true;
-    }
-  }
-
-  return false;
-}
+import { isBot } from "@/constants/bots";
 
 export function middleware(request: NextRequest) {
   // Get the user agent from the request
