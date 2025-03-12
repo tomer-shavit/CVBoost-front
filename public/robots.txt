@@ -1,0 +1,13 @@
+# Allow good bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandexbot
+Allow: /
+
+# Block all other bots
+User-agent: *
+Disallow: / 
