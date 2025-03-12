@@ -26,8 +26,8 @@ export const validateDigestAndxSignature = (
 
   if (
     !crypto.timingSafeEqual(
-      Buffer.from(digest, "hex"),
-      Buffer.from(xSignature, "hex"),
+      new Uint8Array(Buffer.from(digest, "hex")),
+      new Uint8Array(Buffer.from(xSignature, "hex")),
     )
   ) {
     throw new Error(
