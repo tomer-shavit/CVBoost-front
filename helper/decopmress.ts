@@ -6,7 +6,7 @@ export function decompressHex(hexString): string {
 
   zlib.inflate(buffer, (err, decompressed) => {
     if (err) {
-      console.error("Decompression failed:", err);
+      console.error("Decompression failed: ", err);
       return text;
     }
     text = decompressed.toString();
