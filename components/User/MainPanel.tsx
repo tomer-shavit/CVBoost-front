@@ -36,7 +36,7 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
               >
                 <Score boost={boost} />
                 <h6>Summary:</h6>
-                <BoostSummary summary={boost.summary.data.feedback} />
+                <BoostSummary summary={boost.general_feedback.data.feedback} />
                 <div className="flex flex-col justify-between pt-4 md:flex-row">
                   <Link href={`/boost/${boost.boostId}`} key={index}>
                     <button className="mb-3 text-lg text-blackho dark:text-white md:mb-0">

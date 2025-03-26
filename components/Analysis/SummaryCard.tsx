@@ -13,15 +13,15 @@ const SummaryView: React.FC<{ data: BoostResponse }> = ({ data }) => {
   return (
     <Card>
       <Score boost={data}></Score>
-      <SubCard last className="relative" isFull={data.summary.isFull}>
+      <SubCard last className="relative" isFull={data.general_feedback.isFull}>
         <Like
           boostId={data.boostId}
-          isLiked={data.summary.isLiked}
-          feedbackId={data.summary.feedbackId}
+          isLiked={data.general_feedback.isLiked}
+          feedbackId={data.general_feedback.feedbackId}
           className="absolute bottom-4 right-4"
         />
         <AnalysisParagraph
-          text={data.summary.data.feedback}
+          text={data.general_feedback.data.feedback}
         ></AnalysisParagraph>
       </SubCard>
     </Card>

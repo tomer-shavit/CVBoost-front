@@ -14,12 +14,7 @@ const BoostPage = () => {
   usePageView(PageNames.BOOST, {}, session?.user?.id);
   const [file, setFile] = useState<File | undefined>();
   const [boostId, setBoostId] = useState<number | null>(null);
-  const { data, error } = useFetchWithFile(
-    process.env.NEXT_PUBLIC_BOOST_FUNC_API as string,
-    file,
-    "resume",
-    session?.user?.id,
-  );
+  const { data, error } = useFetchWithFile(file, "resume", session?.user?.id);
   const router = useRouter();
 
   useEffect(() => {

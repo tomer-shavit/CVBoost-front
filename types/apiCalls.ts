@@ -4,7 +4,7 @@ export enum FeedbackType {
   RELEVANCE = 3,
   ACHIEVEMENTS = 4,
   KEYWORDS = 5,
-  SUMMARY = 6,
+  GENERAL_FEEDBACK = 6,
 }
 export enum BoostVersion {
   V1 = 1,
@@ -42,7 +42,7 @@ export type BoostResponse = {
   relevance: FeedbackObject;
   achievements: FeedbackObject;
   keywords: FeedbackObject;
-  summary: FeedbackObject;
+  general_feedback: FeedbackObject;
   edited_lines: EditedLineObject[];
   createdAt: Date;
 };
@@ -118,10 +118,10 @@ export const createEmptyBoostResponse = (): BoostResponse => {
         score: 0,
       },
     },
-    summary: {
+    general_feedback: {
       feedbackId: 0,
       isFull: false,
-      feedback_type: FeedbackType.SUMMARY,
+      feedback_type: FeedbackType.GENERAL_FEEDBACK,
       isLiked: false,
       data: {
         feedback: "",

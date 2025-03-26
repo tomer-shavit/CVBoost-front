@@ -40,11 +40,11 @@ export const dbFeedbackToApiFeedback = (
   return {
     feedbackId: dbFeedback.feedbackId,
     feedback_type: dbFeedback.feedbackType,
-    isFull: isFull || dbFeedback.feedbackType === FeedbackType.SUMMARY,
+    isFull: isFull || dbFeedback.feedbackType === FeedbackType.GENERAL_FEEDBACK,
     isLiked: dbFeedback.isLiked,
     data: {
       feedback:
-        isFull || dbFeedback.feedbackType === FeedbackType.SUMMARY
+        isFull || dbFeedback.feedbackType === FeedbackType.GENERAL_FEEDBACK
           ? decryptText(dbFeedback.feedbackText, key)
           : cutStringAtHowever(decryptText(dbFeedback.feedbackText, key)),
       score: dbFeedback.score ? dbFeedback.score : 0,
@@ -95,8 +95,8 @@ export const buildApiBoost = (
       case FeedbackType.KEYWORDS:
         boost.keywords = feedback;
         break;
-      case FeedbackType.SUMMARY:
-        boost.summary = feedback;
+      case FeedbackType.GENERAL_FEEDBACK:
+        boost.general_feedback = feedback;
         break;
     }
   });
