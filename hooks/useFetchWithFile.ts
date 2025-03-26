@@ -48,22 +48,12 @@ const useApi: UseApiHook = (file, fileName, userId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Starting file upload process...");
         setLoading(true);
 
         if (file && userId) {
-          console.log(
-            `Processing file: ${file.name}, size: ${file.size} bytes`,
-          );
-          console.log(`For user: ${userId}`);
-
           // Convert file to base64
           try {
-            console.log("Converting file to base64...");
             const base64Data = await fileToBase64(file);
-            console.log(
-              `Base64 conversion complete. Length: ${base64Data.length}`,
-            );
 
             // Create a JSON payload as expected by our API proxy
             const payload = {
@@ -72,34 +62,15 @@ const useApi: UseApiHook = (file, fileName, userId) => {
             };
 
             // Use local API proxy instead of calling Lambda directly
-            console.log("Sending request to Next.js API proxy...");
             const response = await axios.post("/api/boost", payload);
-            console.log("Received response from API:", response.status);
 
             setData(response.data);
-            console.log("Data successfully set");
           } catch (conversionError) {
-            console.error(
-              "Error during file conversion or API call:",
-              conversionError,
-            );
             throw conversionError;
           }
-        } else {
-          console.log("Missing required data:", {
-            hasFile: !!file,
-            hasUserId: !!userId,
-          });
         }
       } catch (error) {
-        console.error("Error in fetch hook:", error);
-
         if (axios.isAxiosError(error) && error.response) {
-          console.error("API Error Response:", {
-            status: error.response.status,
-            data: error.response.data,
-          });
-
           setError({
             message:
               error.response.data.error ||
@@ -118,7 +89,6 @@ const useApi: UseApiHook = (file, fileName, userId) => {
         );
       } finally {
         setLoading(false);
-        console.log("Request completed, loading state set to false");
       }
     };
 

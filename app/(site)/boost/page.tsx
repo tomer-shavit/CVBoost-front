@@ -29,7 +29,6 @@ const BoostPage = () => {
   useEffect(() => {
     const handleDataFromFunction = async () => {
       if (error) {
-        console.error("Error processing resume:", error);
         router.push("/error");
         return;
       }
@@ -39,7 +38,6 @@ const BoostPage = () => {
       }
 
       if (!session?.user?.id) {
-        console.error("Missing user ID when trying to save boost response");
         setProcessingError("User authentication error. Please try again.");
         return;
       }
@@ -52,7 +50,6 @@ const BoostPage = () => {
         );
         setBoostId(boostIdFromAction.boostId);
       } catch (err) {
-        console.error("Error saving boost response:", err);
         setProcessingError(
           "Failed to save your resume analysis. Please try again.",
         );

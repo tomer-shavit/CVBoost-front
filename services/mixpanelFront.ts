@@ -44,7 +44,7 @@ export class MixpanelFront {
         batch_requests: true,
       });
     } catch (error) {
-      console.error("Error initializing Mixpanel:", error);
+      // Error initializing Mixpanel
     }
   }
 
@@ -57,12 +57,8 @@ export class MixpanelFront {
 
       // Register the analytics properties
       mixpanel.register(analyticsProperties);
-
-      if (isBot) {
-        console.debug("Bot detected and ignored in Mixpanel:", userAgent);
-      }
     } catch (error) {
-      console.error("Error in Mixpanel bot detection:", error);
+      // Error in Mixpanel bot detection
     }
   }
 
@@ -82,7 +78,6 @@ export class MixpanelFront {
         if (!this.isBot) {
           mixpanel.track(eventName, data);
         }
-        console.error("Error in Mixpanel tracking:", error);
       }
     }
     return this;
@@ -93,7 +88,7 @@ export class MixpanelFront {
       try {
         mixpanel.identify(userId);
       } catch (error) {
-        console.error("Error in Mixpanel identify:", error);
+        // Error in Mixpanel identify
       }
     }
     return this;
@@ -104,7 +99,7 @@ export class MixpanelFront {
       try {
         mixpanel.reset();
       } catch (error) {
-        console.error("Error in Mixpanel reset:", error);
+        // Error in Mixpanel reset
       }
     }
     return this;

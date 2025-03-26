@@ -18,7 +18,6 @@ const UserPage = async () => {
   const seed = process.env.ENCRYPTION_SEED ? process.env.ENCRYPTION_SEED : "";
 
   if (!seed) {
-    console.log("No seed found");
     redirect("/");
   }
   if (!sessionData?.user?.id) {

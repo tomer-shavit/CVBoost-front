@@ -30,7 +30,6 @@ export function detectBotClient(): {
       analyticsProperties: prepareAnalyticsProperties({}, userAgent),
     };
   } catch (error) {
-    console.error("Error in client-side bot detection:", error);
     return {
       isBot: false,
       userAgent: "",

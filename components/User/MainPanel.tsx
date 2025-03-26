@@ -39,8 +39,8 @@ export const MainPanel: React.FC<{ user: UserPreview }> = ({ user }) => {
                 <BoostSummary summary={boost.general_feedback.data.feedback} />
                 <div className="flex flex-col justify-between pt-4 md:flex-row">
                   <Link href={`/boost/${boost.boostId}`} key={index}>
-                    <button className="mb-3 text-lg text-blackho dark:text-white md:mb-0">
-                      Click here for full feedback
+                    <button className="inline-flex rounded-full bg-primary px-4 py-1 font-semibold text-white duration-300 ease-in-out hover:bg-blackho dark:bg-primary dark:hover:bg-blackho">
+                      View Full Feedback
                     </button>
                   </Link>
                   <p className="self-end">

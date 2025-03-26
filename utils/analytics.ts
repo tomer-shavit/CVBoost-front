@@ -39,7 +39,6 @@ export function prepareAnalyticsProperties(
   } catch (error) {
     // Fallback to basic detection if detailed detection fails
     const botDetected = isBot(userAgent);
-    console.error("Error in analytics bot detection:", error);
 
     return {
       ...properties,
@@ -67,7 +66,6 @@ export function shouldTrackEvent(userAgent: string): boolean {
     return !botInfo.isBot || botInfo.isAllowedBot;
   } catch (error) {
     // Fallback to basic detection if detailed detection fails
-    console.error("Error in shouldTrackEvent:", error);
     return !isBot(userAgent);
   }
 }
