@@ -8,7 +8,18 @@ import { PageNames } from "@/types/monitoring/pageNames";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-const BoostIdPage = async ({ params }) => {
+// Properly type the params
+interface BoostIdPageProps {
+  params: Promise<{
+    boostId: string;
+  }>;
+}
+
+const BoostIdPage = async ({ params }: BoostIdPageProps) => {
+  // Explicitly await params before destructuring
+  const resolvedParams = await params;
+  const boostId = resolvedParams.boostId;
+
   const sessionData = await getServerSession(authOptions);
   const seed = process.env.ENCRYPTION_SEED ? process.env.ENCRYPTION_SEED : "";
 
@@ -18,8 +29,9 @@ const BoostIdPage = async ({ params }) => {
   if (!sessionData?.user?.id) {
     redirect("/auth/signin");
   }
+
   const wrappedBoost = await fetchBoost(
-    Number(params.boostId),
+    Number(boostId), // Use the awaited boostId
     sessionData.user.id,
     seed,
   );
@@ -35,11 +47,13 @@ const BoostIdPage = async ({ params }) => {
     redirect("/error");
   }
 
-  serverPageView(
+  // Ensure serverPageView is properly typed for async environment
+  await serverPageView(
     PageNames.BOOST_ANALYSIS,
-    { boostId: params.boostId },
+    { boostId }, // Use the awaited boostId
     sessionData.user.id,
   );
+
   return (
     <>{wrappedBoost.boost && <Analysis data={wrappedBoost.boost}></Analysis>}</>
   );
