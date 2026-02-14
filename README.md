@@ -1,87 +1,151 @@
-# Solid - Free Next.js Web Template for SaaS
+# CVBoost
 
-Solid is a free Next.js template specifically crafted for startups, SaaS, and software websites. It provides an extensive array of necessary sections, elements, and pages required to build a fully-equipped website for any SaaS, software, or startup site. Comes with all cutting edge React and Next.js features - **Built with Next.js 13, React 18 and TypeScript.**
+Frontend for CVBoost — an AI-powered resume analyzer that scores resumes, suggests line-by-line improvements, and provides actionable feedback to help job seekers stand out.
 
-This Next.js template's homepage comes with an awesome hero area, logos of associated brands, a features section, an about section, another features section with tabs, counters, and star ratings, integration options, clear call-to-actions, an FAQ section with accordions, a testimonials section, pricing tables, a contact page, a blog, and a distinctive footer.
+## Features
 
-**Solid Next.js template packed with all necessary external pages** - such as login, registration, blog grids, and single blog pages, among others. This broad collection of pages provides all the necessary tools to create a feature-packed, comprehensive, and visually appealing website or landing page for software, a web application, or SaaS.
+- **Upload & Analyze** — drag-and-drop a PDF resume and get AI feedback in seconds
+- **Multi-category Scoring** — clarity, relevance, achievements, and keywords (0-100 each)
+- **Line-by-line Rewrites** — before/after suggestions for stronger phrasing
+- **Bilingual** — auto-detects French and English
+- **Credit-based Subscriptions** — Lemon Squeezy integration for payments
+- **Analysis History** — user dashboard to revisit past results
+- **Dark Mode** — full theme support
 
-### [🔥 Get Solid Pro - Next.js SaaS Boilerplate and Starter Kit](https://nextjstemplates.com/templates/solid)
+## Tech Stack
 
-![Startup Pro](https://uideck.com/wp-content/uploads/edd/2023/07/solid-saas.png)
+- **Next.js 13** (App Router, Server Components, Server Actions)
+- **TypeScript**, **Tailwind CSS**, **Framer Motion**
+- **NextAuth.js** with Google OAuth
+- **Prisma** + **Neon PostgreSQL** (serverless)
+- **Lemon Squeezy** for subscriptions
+- **Mixpanel** for analytics
 
-### [🚀 Solid PRO Live Demo](https://solid.nextjstemplates.com/)
+## Architecture
 
-### [🚀 Solid FREE Live Demo](https://solid-free.nextjstemplates.com/)
-
-### TailAdmin React PRO vs TailAdmin React FREE Comparison 📊
-
-#### [Solid PRO](https://solid.nextjstemplates.com/)
-
-- SaaS Boilerplate + Starter Kit with Essential Integrations and Functionalities
-- Essential Integrations: Auth, DB, Stripe, MDX and More ...
-- Fully Functional, Ready to Use Sanity Blog Support
-- Premium Email Support
-- Functional External Pages
-- Free Lifetime Future Updates
-
----
-
-#### [Solid FREE](https://solid-free.nextjstemplates.com/)
-
-- Only UI - Coded for Next.js
-- No Integrations
-- No Functional Blogging System
-- External Pages without Functions/Integrations
-- Community Support
-- Free Lifetime Future Updates
-
----
-
-### [📦 Download](https://nextjstemplates.com/templates/solid)
-
-### [🔥 Get Pro](https://nextjstemplates.com/templates/solid)
-
-### [🔌 Documentation](https://nextjstemplates.com/docs)
-
-### ⚡ Deploy Now
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FNextJSTemplates%2Fsolid-nextjs)
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/NextJSTemplates/solid-nextjs)
-
-## Installation
-
-Here are the steps you need to follow to install the dependencies.
-
-1.Download and extract the template from **Next.js Templates.**
-
-2.**cd** into the template directory then run this command to install all the dependencies
-
-```bash
-    npm install
+```
+Browser → Next.js App
+             │
+     ┌───────┼───────────┐
+     ▼       ▼           ▼
+  NextAuth  /api/boost  Lemon Squeezy
+  (Google)    │         (webhooks)
+     │        ▼           │
+     │   AWS Lambda       │
+     │   (GPT-4o)         │
+     ▼                    ▼
+       Neon PostgreSQL
 ```
 
-You can start the project on the local server
+The frontend proxies resume analysis requests through `/api/boost` to an [AWS Lambda function](https://github.com/tomer-shavit/CVBoost) that runs the actual GPT-4o analysis. Results are encrypted and stored in the database.
 
-```bash
-    npm run dev
+## Project Structure
+
+```
+app/
+├── (site)/
+│   ├── page.tsx                # Landing page
+│   ├── boost/page.tsx          # Resume upload
+│   ├── boost/[boostId]/page.tsx # Analysis results
+│   ├── checkout/page.tsx       # Pricing & subscription
+│   ├── user/page.tsx           # Dashboard
+│   └── auth/signin/page.tsx    # Login
+├── api/
+│   ├── auth/[...nextauth]/     # Auth endpoints
+│   ├── boost/route.ts          # Lambda proxy
+│   └── checkout/               # Payment webhooks
+└── context/                    # React contexts
+
+components/                     # UI components by feature
+actions/                        # Server actions (save boosts)
+helper/                         # Utilities (encryption, fetchers)
+hooks/                          # Custom hooks (upload, analytics)
+services/                       # Mixpanel integration
+prisma/                         # Schema & migrations
+types/                          # TypeScript definitions
 ```
 
-It'll start the template on [localhost:3000](http://localhost:3000).
+## Setup
 
-The documentation includes all the guides you need for the integrations.
+### Prerequisites
 
-### Deploying on PaaS
+- Node.js 18+
+- Neon PostgreSQL database
+- Google OAuth credentials
+- Lemon Squeezy account (for payments)
 
-If you are using a GitHub repo then you can go with free-of-cost and easy-to-use options like [Vercel](https://vercel.com/), or [Netlify](https://netlify.com/) they offer decent-free tiers for Next.js hosting.
+### Environment Variables
 
-### 📄 License
+Create a `.env.local` file:
 
-Solid Free is 100% free and open-source, feel free to use with your personal and commercial projects.
+```env
+# Database
+DATABASE_URL_NEON=postgresql://...
 
-### 💜 Support
+# Auth
+GOOGLE_ID=your-google-client-id
+GOOGLE_SECRET=your-google-client-secret
+NEXTAUTH_SECRET=random-secret-string
 
-If you like the template, please star this repository to inspire the team to create more stuff like this and reach more users like you!
+# Backend
+BOOST_FUNC_API=https://your-lambda-endpoint.amazonaws.com/...
 
-### ✨ Browse and Download - Best Free [Next.js Templates](https://nextjstemplates.com/templates)
+# Encryption
+ENCRYPTION_SEED=random-secret-for-encrypting-resumes
+
+# Payments
+LEMON_SQUEEZY_WEBHOOK_SECRET=your-webhook-secret
+
+# Analytics (optional)
+NEXT_PUBLIC_MIXPANEL_ID=your-mixpanel-token
+```
+
+### Install & Run
+
+```bash
+npm install
+npx prisma generate
+npx prisma db push    # first time — creates tables
+npm run dev           # http://localhost:3000
+```
+
+### Build
+
+```bash
+npm run build
+npm start
+```
+
+## User Flow
+
+1. **Sign in** with Google OAuth
+2. **Upload** a PDF resume (max 2 pages)
+3. **Receive** AI analysis — scores, feedback, and line-by-line rewrites
+4. **Review** results on the analysis page, like/dislike individual suggestions
+5. **Revisit** past analyses from the dashboard
+
+## Data Model
+
+| Model                | Purpose                                     |
+|---------------------|---------------------------------------------|
+| `User`              | Auth, credit balance, relations             |
+| `ResumeBoost`       | Analysis record with encrypted resume text  |
+| `Feedback`          | Individual feedback items per analysis      |
+| `Subscription`      | Lemon Squeezy subscription state            |
+| `SubscriptionInvoice` | Payment history                           |
+
+## Deployment
+
+Designed for Vercel or any platform that supports Next.js. Set all environment variables in your hosting provider's dashboard.
+
+```bash
+npm run build
+```
+
+## Related
+
+- [CVBoost (Backend)](https://github.com/tomer-shavit/CVBoost) — AWS Lambda function that performs the GPT-4o resume analysis
+
+## License
+
+MIT
